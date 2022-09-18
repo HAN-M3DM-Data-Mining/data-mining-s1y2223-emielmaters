@@ -1,7 +1,7 @@
 ---
 title: "Assigment - kNN DIY"
 author:
-- "name author here - Author"
+- "Emiel Maters - 634735 - Author"
 - "name reviewer here - Reviewer"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
@@ -12,6 +12,7 @@ output:
   html_notebook:
     toc: yes
     toc_depth: 2
+bibliography: references.bib
 ---
 
 ```{r}
@@ -27,7 +28,15 @@ Choose a suitable dataset from [this](https://github.com/HAN-M3DM-Data-Mining/as
 
 ## Business Understanding
 
-text and code here
+This assignment is based on the data and story of Georg Hoffmann, Andreas Bietenbeck, Ralf Lichtinghagen and Frank Klawonn [@hoffmann2018].
+
+When laboratory have to make a diagnose, their way of making decisions is based on rules: "If...then...else". This way of diagnosing can be seen as a decision tree. Those treebranches can be seen as established medical guidelines that lead at some point to a diagnosis, like shown in the example down below.
+
+![Example of an established diagnostic pathway for the differential diagnosis of anemia](images/paste-C0185445.png){#hemoglobin}
+
+This data problem is about creating a KNN model that can determine whether a patient needs a liver transplantation or not.
+
+The data for this study is based on 73 patients (52 males, 21 females), aged 19 to 75 years (median 50), with a proven serological and histopathological diagnosis of hepatitis C. Who have suffer a chronic hepatitis C infection without fibrosis to end stage liver cirrhosis with a need for liver transplantation (LTX).
 
 ## Data Understanding
 
@@ -46,3 +55,5 @@ text and code here
 text and code here
 
 reviewer adds suggestions for improving the model
+
+## Bibliography
