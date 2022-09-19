@@ -26,6 +26,16 @@ library(caret)
 
 Choose a suitable dataset from [this](https://github.com/HAN-M3DM-Data-Mining/assignments/tree/master/datasets) folder and train your own kNN model. Follow all the steps from the CRISP-DM model.
 
+## Set-up
+
+Before we can start with this assignment the installation and activation of some packages is needed:
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(janitor)
+```
+
 ## Business Understanding
 
 This assignment is based on the data and story of Georg Hoffmann, Andreas Bietenbeck, Ralf Lichtinghagen and Frank Klawonn [@hoffmann2018].
@@ -34,13 +44,37 @@ When laboratory have to make a diagnose, their way of making decisions is based 
 
 ![Example of an established diagnostic pathway for the differential diagnosis of anemia](images/paste-C0185445.png){#hemoglobin}
 
-This data problem is about creating a KNN model that can determine whether a patient needs a liver transplantation or not.
+This data problem is about creating a KNN model that can determine in what stage a patient is:
 
-The data for this study is based on 73 patients (52 males, 21 females), aged 19 to 75 years (median 50), with a proven serological and histopathological diagnosis of hepatitis C. Who have suffer a chronic hepatitis C infection without fibrosis to end stage liver cirrhosis with a need for liver transplantation (LTX).
+-   C0 = healthy person
+-   C1 = hepatitis without fibrosis or with only minor signs of portal fibrosis
+-   C2 = therapy-relevant fibrosis
+-   C3 = LTX-relevant end stage liver cirrhosis
+
+The data for this study is based on 73 patients (53 males, 22 females), aged 19 to 75 years (median 50), with a proven serological and histopathological diagnosis of hepatitis C. Who have suffer a chronic hepatitis C infection without fibrosis to end stage liver cirrhosis with a need for liver transplantation (LTX).
 
 ## Data Understanding
 
-text and code here
+As said, this data comes from an open source data set from Georg Hoffmann, Andreas Bietenbeck, Ralf Lichtinghagen and Frank Klawonn [@hoffmann2018].
+
+At first, we copy the original dataset to a new dataframe so if a error is made, the original data won't be messed up.
+
+```{r}
+rawDf<-KNN_hcvdat0
+```
+
+### Prperties of the data
+
+```{r}
+str(rawDf)
+```
+
+As we can see does the dataframe consist of 12 columns that consist of a numeric kind of data and two columns have characteristic data. In total the data set contains 615 observations.
+
+```{r}
+rawDf %>% 
+  tabyl(Category, Sex)
+```
 
 ## Data Preparation
 
