@@ -1677,6 +1677,14 @@ Preparation</a></li>
 </ul>
 </div>
 
+<hr />
+<p>Choose a suitable dataset from <a href="https://github.com/HAN-M3DM-Data-Mining/assignments/tree/master/datasets">this</a>
+folder and train your own kNN model. Follow all the steps from the
+CRISP-DM model.</p>
+<div id="set-up" class="section level2">
+<h2>Set-up</h2>
+<p>Before we can start with this assignment the installation and
+activation of some packages is needed:</p>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
 ## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
@@ -1686,6 +1694,14 @@ Preparation</a></li>
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(dplyr)
+library(janitor)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;janitor&#39;
+## 
+## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     chisq.test, fisher.test</code></pre>
 <pre class="r"><code>library(googlesheets4)
 library(class)
 library(caret)</code></pre>
@@ -1696,22 +1712,6 @@ library(caret)</code></pre>
 ## The following object is masked from &#39;package:purrr&#39;:
 ## 
 ##     lift</code></pre>
-<hr />
-<p>Choose a suitable dataset from <a href="https://github.com/HAN-M3DM-Data-Mining/assignments/tree/master/datasets">this</a>
-folder and train your own kNN model. Follow all the steps from the
-CRISP-DM model.</p>
-<div id="set-up" class="section level2">
-<h2>Set-up</h2>
-<p>Before we can start with this assignment the installation and
-activation of some packages is needed:</p>
-<pre class="r"><code>library(tidyverse)
-library(dplyr)
-library(janitor)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;janitor&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     chisq.test, fisher.test</code></pre>
 </div>
 <div id="business-understanding" class="section level2">
 <h2>Business Understanding</h2>
@@ -1730,7 +1730,7 @@ differential diagnosis of anemia</p>
 <p>This data problem is about creating a KNN model that can determine in
 what stage a patient is:</p>
 <ul>
-<li>C0 = healthy person</li>
+<li>C0 = Blood Donor</li>
 <li>C1 = hepatitis without fibrosis or with only minor signs of portal
 fibrosis</li>
 <li>C2 = therapy-relevant fibrosis</li>
@@ -1741,12 +1741,15 @@ females), aged 19 to 75 years (median 50), with a proven serological and
 histopathological diagnosis of hepatitis C. Who have suffer a chronic
 hepatitis C infection without fibrosis to end stage liver cirrhosis with
 a need for liver transplantation (LTX).</p>
+<p>In this assignment will first be tested whether the kNN model can
+seperate the stages: C1, C2 and C3. After that it will be researched how
+the model performs if data from Blood Donors is added.</p>
 </div>
 <div id="data-understanding" class="section level2">
 <h2>Data Understanding</h2>
 <p>As said, this data comes from an open source data set from Georg
 Hoffmann, Andreas Bietenbeck, Ralf Lichtinghagen and Frank Klawonn <span class="citation">(Hoffmann et al. 2018)</span>. In the next code is the
-data loaded in.</p>
+data written to a table called NewData.</p>
 <pre class="r"><code>NewData&lt;-read_csv(&quot;datasets/KNN-hcvdat0.csv&quot;)</code></pre>
 <pre><code>## New names:
 ## Rows: 615 Columns: 14
@@ -1759,6 +1762,8 @@ data loaded in.</p>
 ## • `` -&gt; `...1`</code></pre>
 <div id="properties-of-the-data" class="section level3">
 <h3>Properties of the data</h3>
+<p>This section covers the properties of the dataset, without having
+made any changes to it.</p>
 <pre class="r"><code>str(NewData)</code></pre>
 <pre><code>## spec_tbl_df [615 × 14] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
 ##  $ ...1    : num [1:615] 1 2 3 4 5 6 7 8 9 10 ...
@@ -1793,23 +1798,130 @@ data loaded in.</p>
 ##   ..   PROT = col_double()
 ##   .. )
 ##  - attr(*, &quot;problems&quot;)=&lt;externalptr&gt;</code></pre>
-<p>As we can see, the dataframe consists of 12 columns that consist of a
-numeric kind of data and two columns have characteristic data. In total
-the data set contains 615 observations.</p>
-<pre class="r"><code>NewData %&gt;% 
-  tabyl(Category, Sex)</code></pre>
+<p>As we can see above, the dataframe consists of twelve columns that
+consists of a numeric data and two columns have characteristic data. In
+total the data set contains 615 observations (rows).</p>
+<p>The data set is distinguished by the variable <code>Category</code>.
+So the health-state of the patients is viewed as <code>Category</code>.
+Down below is given that the majority of the data set consists of Blood
+Donors.</p>
+<pre><code>## Category by Sex - summary</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["Category"],"name":[1],"type":["chr"],"align":["left"]},{"label":["f"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["m"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"0=Blood Donor","2":"215","3":"318"},{"1":"0s=suspect Blood Donor","2":"1","3":"6"},{"1":"1=Hepatitis","2":"4","3":"20"},{"1":"2=Fibrosis","2":"8","3":"13"},{"1":"3=Cirrhosis","2":"10","3":"20"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
+<pre><code>## Age summary</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   19.00   39.00   47.00   47.41   54.00   77.00</code></pre>
 </div>
 </div>
 <div id="data-preparation" class="section level2">
 <h2>Data Preparation</h2>
-<p>At first, we copy the original dataset to a new dataframe so if a
+<p>At first, we copy the original dataset to a new data frame so if a
 error is made, the original data won’t be messed up.</p>
-<pre class="r"><code>Cleaned_data&lt;-NewData</code></pre>
+<pre class="r"><code>Raw_data&lt;-NewData</code></pre>
+<p>The kNN model is at its best when al values are in the same range. So
+as we can see down below, the minimum and maximum values can differ a
+lot and there are some missing values. This can be solved by deleting
+the observations.</p>
+<pre class="r"><code>summary(Raw_data)</code></pre>
+<pre><code>##       ...1         Category              Age            Sex           
+##  Min.   :  1.0   Length:615         Min.   :19.00   Length:615        
+##  1st Qu.:154.5   Class :character   1st Qu.:39.00   Class :character  
+##  Median :308.0   Mode  :character   Median :47.00   Mode  :character  
+##  Mean   :308.0                      Mean   :47.41                     
+##  3rd Qu.:461.5                      3rd Qu.:54.00                     
+##  Max.   :615.0                      Max.   :77.00                     
+##                                                                       
+##       ALB             ALP              ALT              AST        
+##  Min.   :14.90   Min.   : 11.30   Min.   :  0.90   Min.   : 10.60  
+##  1st Qu.:38.80   1st Qu.: 52.50   1st Qu.: 16.40   1st Qu.: 21.60  
+##  Median :41.95   Median : 66.20   Median : 23.00   Median : 25.90  
+##  Mean   :41.62   Mean   : 68.28   Mean   : 28.45   Mean   : 34.79  
+##  3rd Qu.:45.20   3rd Qu.: 80.10   3rd Qu.: 33.08   3rd Qu.: 32.90  
+##  Max.   :82.20   Max.   :416.60   Max.   :325.30   Max.   :324.00  
+##  NA&#39;s   :1       NA&#39;s   :18       NA&#39;s   :1                        
+##       BIL             CHE              CHOL            CREA        
+##  Min.   :  0.8   Min.   : 1.420   Min.   :1.430   Min.   :   8.00  
+##  1st Qu.:  5.3   1st Qu.: 6.935   1st Qu.:4.610   1st Qu.:  67.00  
+##  Median :  7.3   Median : 8.260   Median :5.300   Median :  77.00  
+##  Mean   : 11.4   Mean   : 8.197   Mean   :5.368   Mean   :  81.29  
+##  3rd Qu.: 11.2   3rd Qu.: 9.590   3rd Qu.:6.060   3rd Qu.:  88.00  
+##  Max.   :254.0   Max.   :16.410   Max.   :9.670   Max.   :1079.10  
+##                                   NA&#39;s   :10                       
+##       GGT              PROT      
+##  Min.   :  4.50   Min.   :44.80  
+##  1st Qu.: 15.70   1st Qu.:69.30  
+##  Median : 23.30   Median :72.20  
+##  Mean   : 39.53   Mean   :72.04  
+##  3rd Qu.: 40.20   3rd Qu.:75.40  
+##  Max.   :650.90   Max.   :90.00  
+##                   NA&#39;s   :1</code></pre>
+<pre class="r"><code>Cleaned_data&lt;-na.omit(Raw_data)
+summary(Cleaned_data)</code></pre>
+<pre><code>##       ...1         Category              Age            Sex           
+##  Min.   :  1.0   Length:589         Min.   :23.00   Length:589        
+##  1st Qu.:149.0   Class :character   1st Qu.:39.00   Class :character  
+##  Median :296.0   Mode  :character   Median :47.00   Mode  :character  
+##  Mean   :298.6                      Mean   :47.42                     
+##  3rd Qu.:448.0                      3rd Qu.:54.00                     
+##  Max.   :613.0                      Max.   :77.00                     
+##       ALB             ALP              ALT              AST        
+##  Min.   :14.90   Min.   : 11.30   Min.   :  0.90   Min.   : 10.60  
+##  1st Qu.:38.80   1st Qu.: 52.50   1st Qu.: 16.40   1st Qu.: 21.50  
+##  Median :41.90   Median : 66.20   Median : 22.70   Median : 25.70  
+##  Mean   :41.62   Mean   : 68.12   Mean   : 26.58   Mean   : 33.77  
+##  3rd Qu.:45.10   3rd Qu.: 79.90   3rd Qu.: 31.90   3rd Qu.: 31.70  
+##  Max.   :82.20   Max.   :416.60   Max.   :325.30   Max.   :324.00  
+##       BIL              CHE              CHOL            CREA        
+##  Min.   :  0.80   Min.   : 1.420   Min.   :1.430   Min.   :   8.00  
+##  1st Qu.:  5.20   1st Qu.: 6.930   1st Qu.:4.620   1st Qu.:  68.00  
+##  Median :  7.10   Median : 8.260   Median :5.310   Median :  77.00  
+##  Mean   : 11.02   Mean   : 8.204   Mean   :5.391   Mean   :  81.67  
+##  3rd Qu.: 11.00   3rd Qu.: 9.570   3rd Qu.:6.080   3rd Qu.:  89.00  
+##  Max.   :209.00   Max.   :16.410   Max.   :9.670   Max.   :1079.10  
+##       GGT             PROT      
+##  Min.   :  4.5   Min.   :44.80  
+##  1st Qu.: 15.6   1st Qu.:69.30  
+##  Median : 22.8   Median :72.10  
+##  Mean   : 38.2   Mean   :71.89  
+##  3rd Qu.: 37.6   3rd Qu.:75.20  
+##  Max.   :650.9   Max.   :86.50</code></pre>
+<p>So now the data has to be normalized, only this wat the kNN model can
+work properly. Otherwise some variables could take overhand by having
+relatively high values. This can be achieved via the normalization
+function. The normalization function sets the highest value as a “1” and
+the lowest value as a “0”. It then will proportionally scale the
+original values between the 0 and 1.</p>
+<pre class="r"><code>Normalize &lt;- function(x){return((x-min(x))/(max(x)-min(x)))}</code></pre>
+<pre class="r"><code>num_of_columns &lt;- dim(Cleaned_data)[2] #get number of columns, 2 stands for second value which represents the column count.
+Cleaned_data_n &lt;- sapply(5:num_of_columns, function(x){Normalize(Cleaned_data[,x])}) #start the normalization from 5th column</code></pre>
+<p>For this model are the data input of <code>Blood Donor</code> and
+<code>suspect Blood Donor</code> not mandatory, so they will be removed
+from the dataset.</p>
+<pre class="r"><code>summary(as_tibble(Cleaned_data_n))</code></pre>
+<pre><code>##       ALB              ALP              ALT               AST         
+##  Min.   :0.0000   Min.   :0.0000   Min.   :0.00000   Min.   :0.00000  
+##  1st Qu.:0.3551   1st Qu.:0.1017   1st Qu.:0.04778   1st Qu.:0.03478  
+##  Median :0.4012   Median :0.1355   Median :0.06720   Median :0.04818  
+##  Mean   :0.3971   Mean   :0.1402   Mean   :0.07915   Mean   :0.07394  
+##  3rd Qu.:0.4487   3rd Qu.:0.1693   3rd Qu.:0.09556   3rd Qu.:0.06733  
+##  Max.   :1.0000   Max.   :1.0000   Max.   :1.00000   Max.   :1.00000  
+##       BIL               CHE              CHOL             CREA        
+##  Min.   :0.00000   Min.   :0.0000   Min.   :0.0000   Min.   :0.00000  
+##  1st Qu.:0.02113   1st Qu.:0.3676   1st Qu.:0.3871   1st Qu.:0.05602  
+##  Median :0.03026   Median :0.4563   Median :0.4709   Median :0.06442  
+##  Mean   :0.04908   Mean   :0.4525   Mean   :0.4807   Mean   :0.06878  
+##  3rd Qu.:0.04899   3rd Qu.:0.5437   3rd Qu.:0.5643   3rd Qu.:0.07562  
+##  Max.   :1.00000   Max.   :1.0000   Max.   :1.0000   Max.   :1.00000  
+##       GGT               PROT       
+##  Min.   :0.00000   Min.   :0.0000  
+##  1st Qu.:0.01717   1st Qu.:0.5875  
+##  Median :0.02831   Median :0.6547  
+##  Mean   :0.05213   Mean   :0.6496  
+##  3rd Qu.:0.05121   3rd Qu.:0.7290  
+##  Max.   :1.00000   Max.   :1.0000</code></pre>
 </div>
 <div id="modeling" class="section level2">
 <h2>Modeling</h2>

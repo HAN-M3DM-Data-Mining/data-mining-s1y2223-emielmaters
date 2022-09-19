@@ -1796,11 +1796,24 @@ pre code {
 <div id="TOC">
 <ul>
 <li><a href="#set-up" id="toc-set-up">Set-up</a></li>
-<li><a href="#business-understanding" id="toc-business-understanding">Business Understanding</a></li>
+<li><a href="#business-understanding" id="toc-business-understanding">Business Understanding</a>
+<ul>
+<li><a href="#data-question" id="toc-data-question">Data
+question</a></li>
+</ul></li>
 <li><a href="#data-understanding" id="toc-data-understanding">Data
-Understanding</a></li>
+Understanding</a>
+<ul>
+<li><a href="#properties-of-the-data" id="toc-properties-of-the-data">Properties of the data</a></li>
+</ul></li>
 <li><a href="#data-preparation" id="toc-data-preparation">Data
-Preparation</a></li>
+Preparation</a>
+<ul>
+<li><a href="#creating-a-new-editable-data-set" id="toc-creating-a-new-editable-data-set">Creating a new editable data
+set</a></li>
+<li><a href="#tweaking-the-data" id="toc-tweaking-the-data">Tweaking the
+data</a></li>
+</ul></li>
 <li><a href="#modeling" id="toc-modeling">Modeling</a></li>
 <li><a href="#evaluation-and-deployment" id="toc-evaluation-and-deployment">Evaluation and Deployment</a></li>
 <li><a href="#bibliography" id="toc-bibliography">Bibliography</a></li>
@@ -1812,61 +1825,25 @@ Preparation</a></li>
 <p>Choose a suitable dataset from <a href="https://github.com/HAN-M3DM-Data-Mining/assignments/tree/master/datasets">this</a>
 folder and train your own kNN model. Follow all the steps from the
 CRISP-DM model.</p>
-<div id="set-up" class="section level2">
-<h2>Set-up</h2>
+<div id="set-up" class="section level1">
+<h1>Set-up</h1>
 <p>Before we can start with this assignment the installation and
 activation of some packages is needed:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5gYGAifQ== -->
-<pre class="r"><code>library(tidyverse)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2RzIG92ZXJ3cml0dGVuIGJ5ICdkYnBseXInOlxuICBtZXRob2QgICAgICAgICBmcm9tXG4gIHByaW50LnRibF9sYXp5ICAgICBcbiAgcHJpbnQudGJsX3NxbCAgICAgIFxu4pSA4pSAIEF0dGFjaGluZyBwYWNrYWdlcyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAgdGlkeXZlcnNlIDEuMy4yIOKUgOKUgOKclCBnZ3Bsb3QyIDMuMy42ICAgICAg4pyUIHB1cnJyICAgMC4zLjQgXG7inJQgdGliYmxlICAzLjEuOCAgICAgIOKclCBkcGx5ciAgIDEuMC4xMFxu4pyUIHRpZHlyICAgMS4yLjEgICAgICDinJQgc3RyaW5nciAxLjQuMSBcbuKclCByZWFkciAgIDIuMS4yICAgICAg4pyUIGZvcmNhdHMgMC41LjIg4pSA4pSAIENvbmZsaWN0cyDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAgdGlkeXZlcnNlX2NvbmZsaWN0cygpIOKUgOKUgFxu4pyWIGRwbHlyOjpmaWx0ZXIoKSBtYXNrcyBzdGF0czo6ZmlsdGVyKClcbuKcliBkcGx5cjo6bGFnKCkgICAgbWFza3Mgc3RhdHM6OmxhZygpXG4ifQ== -->
-<pre><code>Registered S3 methods overwritten by &#39;dbplyr&#39;:
-  method         from
-  print.tbl_lazy     
-  print.tbl_sql      
-── Attaching packages ─────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.2 ──✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
-✔ tibble  3.1.8      ✔ dplyr   1.0.10
-✔ tidyr   1.2.1      ✔ stringr 1.4.1 
-✔ readr   2.1.2      ✔ forcats 0.5.2 ── Conflicts ────────────────────────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkcGx5cilcbmxpYnJhcnkoamFuaXRvcilcbmBgYCJ9 -->
-<pre class="r"><code>library(dplyr)
-library(janitor)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYamFuaXRvcuKAmVxuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6c3RhdHPigJk6XG5cbiAgICBjaGlzcS50ZXN0LCBmaXNoZXIudGVzdFxuIn0= -->
-<pre><code>
-Attaching package: ‘janitor’
-
-The following objects are masked from ‘package:stats’:
-
-    chisq.test, fisher.test</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShnb29nbGVzaGVldHM0KVxubGlicmFyeShjbGFzcylcbmxpYnJhcnkoY2FyZXQpXG5gYGAifQ== -->
-<pre class="r"><code>library(googlesheets4)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5saWJyYXJ5KGRwbHlyKVxubGlicmFyeShqYW5pdG9yKVxubGlicmFyeShnb29nbGVzaGVldHM0KVxubGlicmFyeShjbGFzcylcbmxpYnJhcnkoY2FyZXQpXG5gYGAifQ== -->
+<pre class="r"><code>library(tidyverse)
+library(dplyr)
+library(janitor)
+library(googlesheets4)
 library(class)
 library(caret)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBsYXR0aWNlXG5SZWdpc3RlcmVkIFMzIG1ldGhvZCBvdmVyd3JpdHRlbiBieSAnZGF0YS50YWJsZSc6XG4gIG1ldGhvZCAgICAgICAgICAgZnJvbVxuICBwcmludC5kYXRhLnRhYmxlICAgICBcblxuQXR0YWNoaW5nIHBhY2thZ2U6IOKAmGNhcmV04oCZXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6cHVycnLigJk6XG5cbiAgICBsaWZ0XG4ifQ== -->
-<pre><code>Loading required package: lattice
-Registered S3 method overwritten by &#39;data.table&#39;:
-  method           from
-  print.data.table     
-
-Attaching package: ‘caret’
-
-The following object is masked from ‘package:purrr’:
-
-    lift</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="business-understanding" class="section level2">
-<h2>Business Understanding</h2>
+<div id="business-understanding" class="section level1">
+<h1>Business Understanding</h1>
 <p>This assignment is based on the data and story of Georg Hoffmann,
 Andreas Bietenbeck, Ralf Lichtinghagen and Frank Klawonn <span class="citation">(Hoffmann et al. 2018)</span>.</p>
 <p>When laboratory have to make a diagnose, their way of making
@@ -1879,6 +1856,8 @@ like shown in the example down below.</p>
 <p class="caption">Example of an established diagnostic pathway for the
 differential diagnosis of anemia</p>
 </div>
+<div id="data-question" class="section level2">
+<h2>Data question</h2>
 <p>This data problem is about creating a KNN model that can determine in
 what stage a patient is:</p>
 <ul>
@@ -1897,8 +1876,9 @@ a need for liver transplantation (LTX).</p>
 seperate the stages: C1, C2 and C3. After that it will be researched how
 the model performs if data from Blood Donors is added.</p>
 </div>
-<div id="data-understanding" class="section level2">
-<h2>Data Understanding</h2>
+</div>
+<div id="data-understanding" class="section level1">
+<h1>Data Understanding</h1>
 <p>As said, this data comes from an open source data set from Georg
 Hoffmann, Andreas Bietenbeck, Ralf Lichtinghagen and Frank Klawonn <span class="citation">(Hoffmann et al. 2018)</span>. In the next code is the
 data written to a table called NewData.</p>
@@ -1907,18 +1887,10 @@ data written to a table called NewData.</p>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTmV3RGF0YTwtcmVhZF9jc3YoXCJkYXRhc2V0cy9LTk4taGN2ZGF0MC5jc3ZcIilcbmBgYCJ9 -->
 <pre class="r"><code>NewData&lt;-read_csv(&quot;datasets/KNN-hcvdat0.csv&quot;)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiTmV3IG5hbWVzOlJvd3M6IDYxNSBDb2x1bW5zOiAxNOKUgOKUgCBDb2x1bW4gc3BlY2lmaWNhdGlvbiDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIBcbkRlbGltaXRlcjogXCIsXCJcbmNociAgKDIpOiBDYXRlZ29yeSwgU2V4XG5kYmwgKDEyKTogLi4uMSwgQWdlLCBBTEIsIEFMUCwgQUxULCBBU1QsIEJJTCwgQ0hFLCBDSE9MLCBDUkVBLCBHR1QsIFBST1RcbuKEuSBVc2UgYHNwZWMoKWAgdG8gcmV0cmlldmUgdGhlIGZ1bGwgY29sdW1uIHNwZWNpZmljYXRpb24gZm9yIHRoaXMgZGF0YS5cbuKEuSBTcGVjaWZ5IHRoZSBjb2x1bW4gdHlwZXMgb3Igc2V0IGBzaG93X2NvbF90eXBlcyA9IEZBTFNFYCB0byBxdWlldCB0aGlzIG1lc3NhZ2UuXG4ifQ== -->
-<pre><code>New names:Rows: 615 Columns: 14── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-Delimiter: &quot;,&quot;
-chr  (2): Category, Sex
-dbl (12): ...1, Age, ALB, ALP, ALT, AST, BIL, CHE, CHOL, CREA, GGT, PROT
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<div id="properties-of-the-data" class="section level3">
-<h3>Properties of the data</h3>
+<div id="properties-of-the-data" class="section level2">
+<h2>Properties of the data</h2>
 <p>This section covers the properties of the dataset, without having
 made any changes to it.</p>
 <!-- rnb-text-end -->
@@ -1926,135 +1898,73 @@ made any changes to it.</p>
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3RyKE5ld0RhdGEpXG5gYGAifQ== -->
 <pre class="r"><code>str(NewData)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoic3BlY190YmxfZGYgWzYxNSDDlyAxNF0gKFMzOiBzcGVjX3RibF9kZi90YmxfZGYvdGJsL2RhdGEuZnJhbWUpXG4gJCAuLi4xICAgIDogbnVtIFsxOjYxNV0gMSAyIDMgNCA1IDYgNyA4IDkgMTAgLi4uXG4gJCBDYXRlZ29yeTogY2hyIFsxOjYxNV0gXCIwPUJsb29kIERvbm9yXCIgXCIwPUJsb29kIERvbm9yXCIgXCIwPUJsb29kIERvbm9yXCIgXCIwPUJsb29kIERvbm9yXCIgLi4uXG4gJCBBZ2UgICAgIDogbnVtIFsxOjYxNV0gMzIgMzIgMzIgMzIgMzIgMzIgMzIgMzIgMzIgMzIgLi4uXG4gJCBTZXggICAgIDogY2hyIFsxOjYxNV0gXCJtXCIgXCJtXCIgXCJtXCIgXCJtXCIgLi4uXG4gJCBBTEIgICAgIDogbnVtIFsxOjYxNV0gMzguNSAzOC41IDQ2LjkgNDMuMiAzOS4yIDQxLjYgNDYuMyA0Mi4yIDUwLjkgNDIuNCAuLi5cbiAkIEFMUCAgICAgOiBudW0gWzE6NjE1XSA1Mi41IDcwLjMgNzQuNyA1MiA3NC4xIDQzLjMgNDEuMyA0MS45IDY1LjUgODYuMyAuLi5cbiAkIEFMVCAgICAgOiBudW0gWzE6NjE1XSA3LjcgMTggMzYuMiAzMC42IDMyLjYgMTguNSAxNy41IDM1LjggMjMuMiAyMC4zIC4uLlxuICQgQVNUICAgICA6IG51bSBbMTo2MTVdIDIyLjEgMjQuNyA1Mi42IDIyLjYgMjQuOCAxOS43IDE3LjggMzEuMSAyMS4yIDIwIC4uLlxuICQgQklMICAgICA6IG51bSBbMTo2MTVdIDcuNSAzLjkgNi4xIDE4LjkgOS42IDEyLjMgOC41IDE2LjEgNi45IDM1LjIgLi4uXG4gJCBDSEUgICAgIDogbnVtIFsxOjYxNV0gNi45MyAxMS4xNyA4Ljg0IDcuMzMgOS4xNSAuLi5cbiAkIENIT0wgICAgOiBudW0gWzE6NjE1XSAzLjIzIDQuOCA1LjIgNC43NCA0LjMyIDYuMDUgNC43OSA0LjYgNC4xIDQuNDUgLi4uXG4gJCBDUkVBICAgIDogbnVtIFsxOjYxNV0gMTA2IDc0IDg2IDgwIDc2IDExMSA3MCAxMDkgODMgODEgLi4uXG4gJCBHR1QgICAgIDogbnVtIFsxOjYxNV0gMTIuMSAxNS42IDMzLjIgMzMuOCAyOS45IDkxIDE2LjkgMjEuNSAxMy43IDE1LjkgLi4uXG4gJCBQUk9UICAgIDogbnVtIFsxOjYxNV0gNjkgNzYuNSA3OS4zIDc1LjcgNjguNyA3NCA3NC41IDY3LjEgNzEuMyA2OS45IC4uLlxuIC0gYXR0cigqLCBcInNwZWNcIik9XG4gIC4uIGNvbHMoXG4gIC4uICAgLi4uMSA9IGNvbF9kb3VibGUoKSxcbiAgLi4gICBDYXRlZ29yeSA9IGNvbF9jaGFyYWN0ZXIoKSxcbiAgLi4gICBBZ2UgPSBjb2xfZG91YmxlKCksXG4gIC4uICAgU2V4ID0gY29sX2NoYXJhY3RlcigpLFxuICAuLiAgIEFMQiA9IGNvbF9kb3VibGUoKSxcbiAgLi4gICBBTFAgPSBjb2xfZG91YmxlKCksXG4gIC4uICAgQUxUID0gY29sX2RvdWJsZSgpLFxuICAuLiAgIEFTVCA9IGNvbF9kb3VibGUoKSxcbiAgLi4gICBCSUwgPSBjb2xfZG91YmxlKCksXG4gIC4uICAgQ0hFID0gY29sX2RvdWJsZSgpLFxuICAuLiAgIENIT0wgPSBjb2xfZG91YmxlKCksXG4gIC4uICAgQ1JFQSA9IGNvbF9kb3VibGUoKSxcbiAgLi4gICBHR1QgPSBjb2xfZG91YmxlKCksXG4gIC4uICAgUFJPVCA9IGNvbF9kb3VibGUoKVxuICAuLiApXG4gLSBhdHRyKCosIFwicHJvYmxlbXNcIik9PGV4dGVybmFscHRyPiBcbiJ9 -->
-<pre><code>spec_tbl_df [615 × 14] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
- $ ...1    : num [1:615] 1 2 3 4 5 6 7 8 9 10 ...
- $ Category: chr [1:615] &quot;0=Blood Donor&quot; &quot;0=Blood Donor&quot; &quot;0=Blood Donor&quot; &quot;0=Blood Donor&quot; ...
- $ Age     : num [1:615] 32 32 32 32 32 32 32 32 32 32 ...
- $ Sex     : chr [1:615] &quot;m&quot; &quot;m&quot; &quot;m&quot; &quot;m&quot; ...
- $ ALB     : num [1:615] 38.5 38.5 46.9 43.2 39.2 41.6 46.3 42.2 50.9 42.4 ...
- $ ALP     : num [1:615] 52.5 70.3 74.7 52 74.1 43.3 41.3 41.9 65.5 86.3 ...
- $ ALT     : num [1:615] 7.7 18 36.2 30.6 32.6 18.5 17.5 35.8 23.2 20.3 ...
- $ AST     : num [1:615] 22.1 24.7 52.6 22.6 24.8 19.7 17.8 31.1 21.2 20 ...
- $ BIL     : num [1:615] 7.5 3.9 6.1 18.9 9.6 12.3 8.5 16.1 6.9 35.2 ...
- $ CHE     : num [1:615] 6.93 11.17 8.84 7.33 9.15 ...
- $ CHOL    : num [1:615] 3.23 4.8 5.2 4.74 4.32 6.05 4.79 4.6 4.1 4.45 ...
- $ CREA    : num [1:615] 106 74 86 80 76 111 70 109 83 81 ...
- $ GGT     : num [1:615] 12.1 15.6 33.2 33.8 29.9 91 16.9 21.5 13.7 15.9 ...
- $ PROT    : num [1:615] 69 76.5 79.3 75.7 68.7 74 74.5 67.1 71.3 69.9 ...
- - attr(*, &quot;spec&quot;)=
-  .. cols(
-  ..   ...1 = col_double(),
-  ..   Category = col_character(),
-  ..   Age = col_double(),
-  ..   Sex = col_character(),
-  ..   ALB = col_double(),
-  ..   ALP = col_double(),
-  ..   ALT = col_double(),
-  ..   AST = col_double(),
-  ..   BIL = col_double(),
-  ..   CHE = col_double(),
-  ..   CHOL = col_double(),
-  ..   CREA = col_double(),
-  ..   GGT = col_double(),
-  ..   PROT = col_double()
-  .. )
- - attr(*, &quot;problems&quot;)=&lt;externalptr&gt; </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>As we can see above, the dataframe consists of twelve columns that
 consists of a numeric data and two columns have characteristic data. In
 total the data set contains 615 observations (rows).</p>
+<div id="data-summary" class="section level3">
+<h3>Data summary</h3>
 <p>The data set is distinguished by the variable <code>Category</code>.
 So the health-state of the patients is viewed as <code>Category</code>.
 Down below is given that the majority of the data set consists of Blood
-Donors.</p>
+Donors. It also shows that the youngest person is 19 years old and the
+oldest person is 77 years.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2F0KFwiQ2F0ZWdyb3kgYnkgU2V4IHN1bW1hcnlcIixcIlxcblxcblwiKVxuYGBgIn0= -->
-<pre class="r"><code>cat(&quot;Categroy by Sex summary&quot;,&quot;\n\n&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiQ2F0ZWdyb3kgYnkgU2V4IHN1bW1hcnkgXG4ifQ== -->
-<pre><code>Categroy by Sex summary </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTmV3RGF0YSAlPiUgXG4gIHRhYnlsKENhdGVnb3J5LCBTZXgpXG5gYGAifQ== -->
-<pre class="r"><code>NewData %&gt;% 
-  tabyl(Category, Sex)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgICAgQ2F0ZWdvcnkgICBmICAgbVxuICAgICAgICAgIDA9Qmxvb2QgRG9ub3IgMjE1IDMxOFxuIDBzPXN1c3BlY3QgQmxvb2QgRG9ub3IgICAxICAgNlxuICAgICAgICAgICAgMT1IZXBhdGl0aXMgICA0ICAyMFxuICAgICAgICAgICAgIDI9Rmlicm9zaXMgICA4ICAxM1xuICAgICAgICAgICAgMz1DaXJyaG9zaXMgIDEwICAyMFxuIn0= -->
-<pre><code>               Category   f   m
-          0=Blood Donor 215 318
- 0s=suspect Blood Donor   1   6
-            1=Hepatitis   4  20
-             2=Fibrosis   8  13
-            3=Cirrhosis  10  20</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuY2F0KFwiXFxuXFxuXCIsXCJBZ2Ugc3VtbWFyeVwiLFwiXFxuXFxuXCIpXG5gYGAifQ== -->
-<pre class="r"><code>cat(&quot;\n\n&quot;,&quot;Age summary&quot;,&quot;\n\n&quot;)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG5cbiBBZ2Ugc3VtbWFyeSBcbiJ9 -->
-<pre><code>
-
- Age summary </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShOZXdEYXRhJEFnZSlcbmBgYCJ9 -->
-<pre class="r"><code>summary(NewData$Age)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgTWluLiAxc3QgUXUuICBNZWRpYW4gICAgTWVhbiAzcmQgUXUuICAgIE1heC4gXG4gIDE5LjAwICAgMzkuMDAgICA0Ny4wMCAgIDQ3LjQxICAgNTQuMDAgICA3Ny4wMCBcbiJ9 -->
-<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  19.00   39.00   47.00   47.41   54.00   77.00 </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuICBcbmBgYCJ9 -->
-<pre class="r"><code>  </code></pre>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
 </div>
-<div id="data-preparation" class="section level2">
-<h2>Data Preparation</h2>
+</div>
+<div id="data-preparation" class="section level1">
+<h1>Data Preparation</h1>
+<div id="creating-a-new-editable-data-set" class="section level2">
+<h2>Creating a new editable data set</h2>
 <p>At first, we copy the original dataset to a new data frame so if a
 error is made, the original data won’t be messed up.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuQ2xlYW5lZF9kYXRhPC1OZXdEYXRhXG5gYGAifQ== -->
-<pre class="r"><code>Cleaned_data&lt;-NewData</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuUmF3X2RhdGE8LU5ld0RhdGFcbmBgYCJ9 -->
+<pre class="r"><code>Raw_data&lt;-NewData</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
+<div id="tweaking-the-data" class="section level2">
+<h2>Tweaking the data</h2>
 <p>The kNN model is at its best when al values are in the same range. So
 as we can see down below, the minimum and maximum values can differ a
-lot:</p>
+lot and there are also some missing values. This can be solved by
+normalizing and deleting the observations.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShDbGVhbmVkX2RhdGEpXG5gYGAifQ== -->
-<pre class="r"><code>summary(Cleaned_data)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShSYXdfZGF0YSlcbmBgYCJ9 -->
+<pre class="r"><code>summary(Raw_data)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgLi4uMSAgICAgICAgIENhdGVnb3J5ICAgICAgICAgICAgICBBZ2UgICAgICAgICAgICBTZXggICAgICAgICAgICAgICAgIEFMQiAgICAgICAgICAgICBBTFAgICAgICAgICAgICAgIEFMVCAgICAgICAgICAgICAgQVNUICAgICAgICBcbiBNaW4uICAgOiAgMS4wICAgTGVuZ3RoOjYxNSAgICAgICAgIE1pbi4gICA6MTkuMDAgICBMZW5ndGg6NjE1ICAgICAgICAgTWluLiAgIDoxNC45MCAgIE1pbi4gICA6IDExLjMwICAgTWluLiAgIDogIDAuOTAgICBNaW4uICAgOiAxMC42MCAgXG4gMXN0IFF1LjoxNTQuNSAgIENsYXNzIDpjaGFyYWN0ZXIgICAxc3QgUXUuOjM5LjAwICAgQ2xhc3MgOmNoYXJhY3RlciAgIDFzdCBRdS46MzguODAgICAxc3QgUXUuOiA1Mi41MCAgIDFzdCBRdS46IDE2LjQwICAgMXN0IFF1LjogMjEuNjAgIFxuIE1lZGlhbiA6MzA4LjAgICBNb2RlICA6Y2hhcmFjdGVyICAgTWVkaWFuIDo0Ny4wMCAgIE1vZGUgIDpjaGFyYWN0ZXIgICBNZWRpYW4gOjQxLjk1ICAgTWVkaWFuIDogNjYuMjAgICBNZWRpYW4gOiAyMy4wMCAgIE1lZGlhbiA6IDI1LjkwICBcbiBNZWFuICAgOjMwOC4wICAgICAgICAgICAgICAgICAgICAgIE1lYW4gICA6NDcuNDEgICAgICAgICAgICAgICAgICAgICAgTWVhbiAgIDo0MS42MiAgIE1lYW4gICA6IDY4LjI4ICAgTWVhbiAgIDogMjguNDUgICBNZWFuICAgOiAzNC43OSAgXG4gM3JkIFF1Ljo0NjEuNSAgICAgICAgICAgICAgICAgICAgICAzcmQgUXUuOjU0LjAwICAgICAgICAgICAgICAgICAgICAgIDNyZCBRdS46NDUuMjAgICAzcmQgUXUuOiA4MC4xMCAgIDNyZCBRdS46IDMzLjA4ICAgM3JkIFF1LjogMzIuOTAgIFxuIE1heC4gICA6NjE1LjAgICAgICAgICAgICAgICAgICAgICAgTWF4LiAgIDo3Ny4wMCAgICAgICAgICAgICAgICAgICAgICBNYXguICAgOjgyLjIwICAgTWF4LiAgIDo0MTYuNjAgICBNYXguICAgOjMyNS4zMCAgIE1heC4gICA6MzI0LjAwICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkEncyAgIDoxICAgICAgIE5BJ3MgICA6MTggICAgICAgTkEncyAgIDoxICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICBCSUwgICAgICAgICAgICAgQ0hFICAgICAgICAgICAgICBDSE9MICAgICAgICAgICAgQ1JFQSAgICAgICAgICAgICAgR0dUICAgICAgICAgICAgICBQUk9UICAgICAgXG4gTWluLiAgIDogIDAuOCAgIE1pbi4gICA6IDEuNDIwICAgTWluLiAgIDoxLjQzMCAgIE1pbi4gICA6ICAgOC4wMCAgIE1pbi4gICA6ICA0LjUwICAgTWluLiAgIDo0NC44MCAgXG4gMXN0IFF1LjogIDUuMyAgIDFzdCBRdS46IDYuOTM1ICAgMXN0IFF1Ljo0LjYxMCAgIDFzdCBRdS46ICA2Ny4wMCAgIDFzdCBRdS46IDE1LjcwICAgMXN0IFF1Ljo2OS4zMCAgXG4gTWVkaWFuIDogIDcuMyAgIE1lZGlhbiA6IDguMjYwICAgTWVkaWFuIDo1LjMwMCAgIE1lZGlhbiA6ICA3Ny4wMCAgIE1lZGlhbiA6IDIzLjMwICAgTWVkaWFuIDo3Mi4yMCAgXG4gTWVhbiAgIDogMTEuNCAgIE1lYW4gICA6IDguMTk3ICAgTWVhbiAgIDo1LjM2OCAgIE1lYW4gICA6ICA4MS4yOSAgIE1lYW4gICA6IDM5LjUzICAgTWVhbiAgIDo3Mi4wNCAgXG4gM3JkIFF1LjogMTEuMiAgIDNyZCBRdS46IDkuNTkwICAgM3JkIFF1Ljo2LjA2MCAgIDNyZCBRdS46ICA4OC4wMCAgIDNyZCBRdS46IDQwLjIwICAgM3JkIFF1Ljo3NS40MCAgXG4gTWF4LiAgIDoyNTQuMCAgIE1heC4gICA6MTYuNDEwICAgTWF4LiAgIDo5LjY3MCAgIE1heC4gICA6MTA3OS4xMCAgIE1heC4gICA6NjUwLjkwICAgTWF4LiAgIDo5MC4wMCAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkEncyAgIDoxMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkEncyAgIDoxICAgICAgXG4ifQ== -->
-<pre><code>      ...1         Category              Age            Sex                 ALB             ALP              ALT              AST        
- Min.   :  1.0   Length:615         Min.   :19.00   Length:615         Min.   :14.90   Min.   : 11.30   Min.   :  0.90   Min.   : 10.60  
- 1st Qu.:154.5   Class :character   1st Qu.:39.00   Class :character   1st Qu.:38.80   1st Qu.: 52.50   1st Qu.: 16.40   1st Qu.: 21.60  
- Median :308.0   Mode  :character   Median :47.00   Mode  :character   Median :41.95   Median : 66.20   Median : 23.00   Median : 25.90  
- Mean   :308.0                      Mean   :47.41                      Mean   :41.62   Mean   : 68.28   Mean   : 28.45   Mean   : 34.79  
- 3rd Qu.:461.5                      3rd Qu.:54.00                      3rd Qu.:45.20   3rd Qu.: 80.10   3rd Qu.: 33.08   3rd Qu.: 32.90  
- Max.   :615.0                      Max.   :77.00                      Max.   :82.20   Max.   :416.60   Max.   :325.30   Max.   :324.00  
-                                                                       NA&#39;s   :1       NA&#39;s   :18       NA&#39;s   :1                        
-      BIL             CHE              CHOL            CREA              GGT              PROT      
- Min.   :  0.8   Min.   : 1.420   Min.   :1.430   Min.   :   8.00   Min.   :  4.50   Min.   :44.80  
- 1st Qu.:  5.3   1st Qu.: 6.935   1st Qu.:4.610   1st Qu.:  67.00   1st Qu.: 15.70   1st Qu.:69.30  
- Median :  7.3   Median : 8.260   Median :5.300   Median :  77.00   Median : 23.30   Median :72.20  
- Mean   : 11.4   Mean   : 8.197   Mean   :5.368   Mean   :  81.29   Mean   : 39.53   Mean   :72.04  
- 3rd Qu.: 11.2   3rd Qu.: 9.590   3rd Qu.:6.060   3rd Qu.:  88.00   3rd Qu.: 40.20   3rd Qu.:75.40  
- Max.   :254.0   Max.   :16.410   Max.   :9.670   Max.   :1079.10   Max.   :650.90   Max.   :90.00  
-                                  NA&#39;s   :10                                         NA&#39;s   :1      </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>So for that reason the data has to be normalized. This can be
-achieved via the normalization function. The normalization function sets
-the highest value as a “1” and the lowest value as a “0”. It then will
-proportionally scale the original values between the 0 and 1.</p>
+<div id="deleting-missing-values" class="section level3">
+<h3>Deleting missing values</h3>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuQ2xlYW5lZF9kYXRhPC1uYS5vbWl0KFJhd19kYXRhKVxuc3VtbWFyeShDbGVhbmVkX2RhdGEpXG5gYGAifQ== -->
+<pre class="r"><code>Cleaned_data&lt;-na.omit(Raw_data)
+summary(Cleaned_data)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="normalizing-the-data" class="section level3">
+<h3>Normalizing the data</h3>
+<p>So now the data has to be normalized, only this wat the kNN model can
+work properly. Otherwise some variables could take overhand by having
+relatively high values. This can be achieved via the normalization
+function. The normalization function sets the highest value as a “1” and
+the lowest value as a “0”. It then will proportionally scale the
+original values between the 0 and 1.</p>
+<div id="setting-up-the-normalize-fuction" class="section level4">
+<h4>Setting up the normalize fuction</h4>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuTm9ybWFsaXplIDwtIGZ1bmN0aW9uKHgpe3JldHVybigoeC1taW4oeCkpLyhtYXgoeCktbWluKHgpKSl9XG5gYGAifQ== -->
@@ -2062,6 +1972,9 @@ proportionally scale the original values between the 0 and 1.</p>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
+</div>
+<div id="write-the-normalized-values-to-a-new-table" class="section level4">
+<h4>Write the normalized values to a new table</h4>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
 <!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubnVtX29mX2NvbHVtbnMgPC0gZGltKENsZWFuZWRfZGF0YSlbMl0gI2dldCBudW1iZXIgb2YgY29sdW1ucywgMiBzdGFuZHMgZm9yIHNlY29uZCB2YWx1ZSB3aGljaCByZXByZXNlbnRzIHRoZSBjb2x1bW4gY291bnQuXG5DbGVhbmVkX2RhdGFfbiA8LSBzYXBwbHkoNTpudW1fb2ZfY29sdW1ucywgZnVuY3Rpb24oeCl7Tm9ybWFsaXplKENsZWFuZWRfZGF0YVsseF0pfSkgI3N0YXJ0IHRoZSBub3JtYWxpemF0aW9uIGZyb20gNXRoIGNvbHVtblxuXG5gYGAifQ== -->
@@ -2071,46 +1984,36 @@ Cleaned_data_n &lt;- sapply(5:num_of_columns, function(x){Normalize(Cleaned_data
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>For this model are the data input of <code>Blood Donor</code> and
-<code>suspect Blood Donor</code> not mandatory, so they will be removed
-from the dataset.</p>
+<p>In this summary is clearly visible that there are no missing values
+(NA’s) and all the values are between “0” and “1”.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShDbGVhbmVkX2RhdGEpXG5gYGAifQ== -->
-<pre class="r"><code>summary(Cleaned_data)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3VtbWFyeShhc190aWJibGUoQ2xlYW5lZF9kYXRhX24pKVxuYGBgIn0= -->
+<pre class="r"><code>summary(as_tibble(Cleaned_data_n))</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgLi4uMSAgICAgICAgIENhdGVnb3J5ICAgICAgICAgICAgICBBZ2UgICAgICAgICAgICBTZXggICAgICAgICAgICAgICAgIEFMQiAgICAgICAgICAgICBBTFAgICAgICAgICAgICAgIEFMVCAgICAgICAgICAgICAgQVNUICAgICAgICBcbiBNaW4uICAgOiAgMS4wICAgTGVuZ3RoOjYxNSAgICAgICAgIE1pbi4gICA6MTkuMDAgICBMZW5ndGg6NjE1ICAgICAgICAgTWluLiAgIDoxNC45MCAgIE1pbi4gICA6IDExLjMwICAgTWluLiAgIDogIDAuOTAgICBNaW4uICAgOiAxMC42MCAgXG4gMXN0IFF1LjoxNTQuNSAgIENsYXNzIDpjaGFyYWN0ZXIgICAxc3QgUXUuOjM5LjAwICAgQ2xhc3MgOmNoYXJhY3RlciAgIDFzdCBRdS46MzguODAgICAxc3QgUXUuOiA1Mi41MCAgIDFzdCBRdS46IDE2LjQwICAgMXN0IFF1LjogMjEuNjAgIFxuIE1lZGlhbiA6MzA4LjAgICBNb2RlICA6Y2hhcmFjdGVyICAgTWVkaWFuIDo0Ny4wMCAgIE1vZGUgIDpjaGFyYWN0ZXIgICBNZWRpYW4gOjQxLjk1ICAgTWVkaWFuIDogNjYuMjAgICBNZWRpYW4gOiAyMy4wMCAgIE1lZGlhbiA6IDI1LjkwICBcbiBNZWFuICAgOjMwOC4wICAgICAgICAgICAgICAgICAgICAgIE1lYW4gICA6NDcuNDEgICAgICAgICAgICAgICAgICAgICAgTWVhbiAgIDo0MS42MiAgIE1lYW4gICA6IDY4LjI4ICAgTWVhbiAgIDogMjguNDUgICBNZWFuICAgOiAzNC43OSAgXG4gM3JkIFF1Ljo0NjEuNSAgICAgICAgICAgICAgICAgICAgICAzcmQgUXUuOjU0LjAwICAgICAgICAgICAgICAgICAgICAgIDNyZCBRdS46NDUuMjAgICAzcmQgUXUuOiA4MC4xMCAgIDNyZCBRdS46IDMzLjA4ICAgM3JkIFF1LjogMzIuOTAgIFxuIE1heC4gICA6NjE1LjAgICAgICAgICAgICAgICAgICAgICAgTWF4LiAgIDo3Ny4wMCAgICAgICAgICAgICAgICAgICAgICBNYXguICAgOjgyLjIwICAgTWF4LiAgIDo0MTYuNjAgICBNYXguICAgOjMyNS4zMCAgIE1heC4gICA6MzI0LjAwICBcbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkEncyAgIDoxICAgICAgIE5BJ3MgICA6MTggICAgICAgTkEncyAgIDoxICAgICAgICAgICAgICAgICAgICAgICAgXG4gICAgICBCSUwgICAgICAgICAgICAgQ0hFICAgICAgICAgICAgICBDSE9MICAgICAgICAgICAgQ1JFQSAgICAgICAgICAgICAgR0dUICAgICAgICAgICAgICBQUk9UICAgICAgXG4gTWluLiAgIDogIDAuOCAgIE1pbi4gICA6IDEuNDIwICAgTWluLiAgIDoxLjQzMCAgIE1pbi4gICA6ICAgOC4wMCAgIE1pbi4gICA6ICA0LjUwICAgTWluLiAgIDo0NC44MCAgXG4gMXN0IFF1LjogIDUuMyAgIDFzdCBRdS46IDYuOTM1ICAgMXN0IFF1Ljo0LjYxMCAgIDFzdCBRdS46ICA2Ny4wMCAgIDFzdCBRdS46IDE1LjcwICAgMXN0IFF1Ljo2OS4zMCAgXG4gTWVkaWFuIDogIDcuMyAgIE1lZGlhbiA6IDguMjYwICAgTWVkaWFuIDo1LjMwMCAgIE1lZGlhbiA6ICA3Ny4wMCAgIE1lZGlhbiA6IDIzLjMwICAgTWVkaWFuIDo3Mi4yMCAgXG4gTWVhbiAgIDogMTEuNCAgIE1lYW4gICA6IDguMTk3ICAgTWVhbiAgIDo1LjM2OCAgIE1lYW4gICA6ICA4MS4yOSAgIE1lYW4gICA6IDM5LjUzICAgTWVhbiAgIDo3Mi4wNCAgXG4gM3JkIFF1LjogMTEuMiAgIDNyZCBRdS46IDkuNTkwICAgM3JkIFF1Ljo2LjA2MCAgIDNyZCBRdS46ICA4OC4wMCAgIDNyZCBRdS46IDQwLjIwICAgM3JkIFF1Ljo3NS40MCAgXG4gTWF4LiAgIDoyNTQuMCAgIE1heC4gICA6MTYuNDEwICAgTWF4LiAgIDo5LjY3MCAgIE1heC4gICA6MTA3OS4xMCAgIE1heC4gICA6NjUwLjkwICAgTWF4LiAgIDo5MC4wMCAgXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkEncyAgIDoxMCAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgTkEncyAgIDoxICAgICAgXG4ifQ== -->
-<pre><code>      ...1         Category              Age            Sex                 ALB             ALP              ALT              AST        
- Min.   :  1.0   Length:615         Min.   :19.00   Length:615         Min.   :14.90   Min.   : 11.30   Min.   :  0.90   Min.   : 10.60  
- 1st Qu.:154.5   Class :character   1st Qu.:39.00   Class :character   1st Qu.:38.80   1st Qu.: 52.50   1st Qu.: 16.40   1st Qu.: 21.60  
- Median :308.0   Mode  :character   Median :47.00   Mode  :character   Median :41.95   Median : 66.20   Median : 23.00   Median : 25.90  
- Mean   :308.0                      Mean   :47.41                      Mean   :41.62   Mean   : 68.28   Mean   : 28.45   Mean   : 34.79  
- 3rd Qu.:461.5                      3rd Qu.:54.00                      3rd Qu.:45.20   3rd Qu.: 80.10   3rd Qu.: 33.08   3rd Qu.: 32.90  
- Max.   :615.0                      Max.   :77.00                      Max.   :82.20   Max.   :416.60   Max.   :325.30   Max.   :324.00  
-                                                                       NA&#39;s   :1       NA&#39;s   :18       NA&#39;s   :1                        
-      BIL             CHE              CHOL            CREA              GGT              PROT      
- Min.   :  0.8   Min.   : 1.420   Min.   :1.430   Min.   :   8.00   Min.   :  4.50   Min.   :44.80  
- 1st Qu.:  5.3   1st Qu.: 6.935   1st Qu.:4.610   1st Qu.:  67.00   1st Qu.: 15.70   1st Qu.:69.30  
- Median :  7.3   Median : 8.260   Median :5.300   Median :  77.00   Median : 23.30   Median :72.20  
- Mean   : 11.4   Mean   : 8.197   Mean   :5.368   Mean   :  81.29   Mean   : 39.53   Mean   :72.04  
- 3rd Qu.: 11.2   3rd Qu.: 9.590   3rd Qu.:6.060   3rd Qu.:  88.00   3rd Qu.: 40.20   3rd Qu.:75.40  
- Max.   :254.0   Max.   :16.410   Max.   :9.670   Max.   :1079.10   Max.   :650.90   Max.   :90.00  
-                                  NA&#39;s   :10                                         NA&#39;s   :1      </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
-<div id="modeling" class="section level2">
-<h2>Modeling</h2>
+</div>
+<div id="exclude-columns" class="section level3">
+<h3>Exclude columns</h3>
+<p>For this model are the data input of <code>Blood Donor</code> and
+<code>suspect Blood Donor</code> not mandatory, so they will be removed
+from the dataset.</p>
+</div>
+</div>
+</div>
+<div id="modeling" class="section level1">
+<h1>Modeling</h1>
 <p>text and code here</p>
 </div>
-<div id="evaluation-and-deployment" class="section level2">
-<h2>Evaluation and Deployment</h2>
+<div id="evaluation-and-deployment" class="section level1">
+<h1>Evaluation and Deployment</h1>
 <p>text and code here</p>
 <p>reviewer adds suggestions for improving the model</p>
 </div>
-<div id="bibliography" class="section level2">
-<h2>Bibliography</h2>
+<div id="bibliography" class="section level1">
+<h1>Bibliography</h1>
 <!-- rnb-text-end -->
 <div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-hoffmann2018" class="csl-entry">
@@ -2122,7 +2025,7 @@ Laboratory Diagnostic Pathways<span></span>a Case Study.”</span>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkFzc2lnbWVudCAtIGtOTiBESVkiDQphdXRob3I6DQotICJFbWllbCBNYXRlcnMgLSA2MzQ3MzUgLSBBdXRob3IiDQotICJuYW1lIHJldmlld2VyIGhlcmUgLSBSZXZpZXdlciINCmRhdGU6ICJgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVkICVCLCAlWScpYCINCm91dHB1dDoNCiAgaHRtbF9kb2N1bWVudDoNCiAgICB0b2M6IHllcw0KICAgIHRvY19kZXB0aDogJzInDQogICAgZGZfcHJpbnQ6IHBhZ2VkDQogIGh0bWxfbm90ZWJvb2s6DQogICAgdG9jOiB5ZXMNCiAgICB0b2NfZGVwdGg6IDINCmJpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCi0tLQ0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg0KQ2hvb3NlIGEgc3VpdGFibGUgZGF0YXNldCBmcm9tIFt0aGlzXShodHRwczovL2dpdGh1Yi5jb20vSEFOLU0zRE0tRGF0YS1NaW5pbmcvYXNzaWdubWVudHMvdHJlZS9tYXN0ZXIvZGF0YXNldHMpIGZvbGRlciBhbmQgdHJhaW4geW91ciBvd24ga05OIG1vZGVsLiBGb2xsb3cgYWxsIHRoZSBzdGVwcyBmcm9tIHRoZSBDUklTUC1ETSBtb2RlbC4NCg0KIyMgU2V0LXVwDQoNCkJlZm9yZSB3ZSBjYW4gc3RhcnQgd2l0aCB0aGlzIGFzc2lnbm1lbnQgdGhlIGluc3RhbGxhdGlvbiBhbmQgYWN0aXZhdGlvbiBvZiBzb21lIHBhY2thZ2VzIGlzIG5lZWRlZDoNCg0KYGBge3J9DQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmxpYnJhcnkoZHBseXIpDQpsaWJyYXJ5KGphbml0b3IpDQpsaWJyYXJ5KGdvb2dsZXNoZWV0czQpDQpsaWJyYXJ5KGNsYXNzKQ0KbGlicmFyeShjYXJldCkNCmBgYA0KDQojIyBCdXNpbmVzcyBVbmRlcnN0YW5kaW5nDQoNClRoaXMgYXNzaWdubWVudCBpcyBiYXNlZCBvbiB0aGUgZGF0YSBhbmQgc3Rvcnkgb2YgR2VvcmcgSG9mZm1hbm4sIEFuZHJlYXMgQmlldGVuYmVjaywgUmFsZiBMaWNodGluZ2hhZ2VuIGFuZCBGcmFuayBLbGF3b25uIFtAaG9mZm1hbm4yMDE4XS4NCg0KV2hlbiBsYWJvcmF0b3J5IGhhdmUgdG8gbWFrZSBhIGRpYWdub3NlLCB0aGVpciB3YXkgb2YgbWFraW5nIGRlY2lzaW9ucyBpcyBiYXNlZCBvbiBydWxlczogIklmLi4udGhlbi4uLmVsc2UiLiBUaGlzIHdheSBvZiBkaWFnbm9zaW5nIGNhbiBiZSBzZWVuIGFzIGEgZGVjaXNpb24gdHJlZS4gVGhvc2UgdHJlZWJyYW5jaGVzIGNhbiBiZSBzZWVuIGFzIGVzdGFibGlzaGVkIG1lZGljYWwgZ3VpZGVsaW5lcyB0aGF0IGxlYWQgYXQgc29tZSBwb2ludCB0byBhIGRpYWdub3NpcywgbGlrZSBzaG93biBpbiB0aGUgZXhhbXBsZSBkb3duIGJlbG93Lg0KDQohW0V4YW1wbGUgb2YgYW4gZXN0YWJsaXNoZWQgZGlhZ25vc3RpYyBwYXRod2F5IGZvciB0aGUgZGlmZmVyZW50aWFsIGRpYWdub3NpcyBvZiBhbmVtaWFdKGltYWdlcy9wYXN0ZS1DMDE4NTQ0NS5wbmcpeyNoZW1vZ2xvYmlufQ0KDQpUaGlzIGRhdGEgcHJvYmxlbSBpcyBhYm91dCBjcmVhdGluZyBhIEtOTiBtb2RlbCB0aGF0IGNhbiBkZXRlcm1pbmUgaW4gd2hhdCBzdGFnZSBhIHBhdGllbnQgaXM6DQoNCi0gICBDMCA9IEJsb29kIERvbm9yDQotICAgQzEgPSBoZXBhdGl0aXMgd2l0aG91dCBmaWJyb3NpcyBvciB3aXRoIG9ubHkgbWlub3Igc2lnbnMgb2YgcG9ydGFsIGZpYnJvc2lzDQotICAgQzIgPSB0aGVyYXB5LXJlbGV2YW50IGZpYnJvc2lzDQotICAgQzMgPSBMVFgtcmVsZXZhbnQgZW5kIHN0YWdlIGxpdmVyIGNpcnJob3Npcw0KDQpUaGUgZGF0YSBmb3IgdGhpcyBzdHVkeSBpcyBiYXNlZCBvbiA3MyBwYXRpZW50cyAoNTMgbWFsZXMsIDIyIGZlbWFsZXMpLCBhZ2VkIDE5IHRvIDc1IHllYXJzIChtZWRpYW4gNTApLCB3aXRoIGEgcHJvdmVuIHNlcm9sb2dpY2FsIGFuZCBoaXN0b3BhdGhvbG9naWNhbCBkaWFnbm9zaXMgb2YgaGVwYXRpdGlzIEMuIFdobyBoYXZlIHN1ZmZlciBhIGNocm9uaWMgaGVwYXRpdGlzIEMgaW5mZWN0aW9uIHdpdGhvdXQgZmlicm9zaXMgdG8gZW5kIHN0YWdlIGxpdmVyIGNpcnJob3NpcyB3aXRoIGEgbmVlZCBmb3IgbGl2ZXIgdHJhbnNwbGFudGF0aW9uIChMVFgpLg0KDQpJbiB0aGlzIGFzc2lnbm1lbnQgd2lsbCBmaXJzdCBiZSB0ZXN0ZWQgd2hldGhlciB0aGUga05OIG1vZGVsIGNhbiBzZXBlcmF0ZSB0aGUgc3RhZ2VzOiBDMSwgQzIgYW5kIEMzLiBBZnRlciB0aGF0IGl0IHdpbGwgYmUgcmVzZWFyY2hlZCBob3cgdGhlIG1vZGVsIHBlcmZvcm1zIGlmIGRhdGEgZnJvbSBCbG9vZCBEb25vcnMgaXMgYWRkZWQuDQoNCiMjIERhdGEgVW5kZXJzdGFuZGluZw0KDQpBcyBzYWlkLCB0aGlzIGRhdGEgY29tZXMgZnJvbSBhbiBvcGVuIHNvdXJjZSBkYXRhIHNldCBmcm9tIEdlb3JnIEhvZmZtYW5uLCBBbmRyZWFzIEJpZXRlbmJlY2ssIFJhbGYgTGljaHRpbmdoYWdlbiBhbmQgRnJhbmsgS2xhd29ubiBbQGhvZmZtYW5uMjAxOF0uIEluIHRoZSBuZXh0IGNvZGUgaXMgdGhlIGRhdGEgd3JpdHRlbiB0byBhIHRhYmxlIGNhbGxlZCBOZXdEYXRhLg0KDQpgYGB7cn0NCk5ld0RhdGE8LXJlYWRfY3N2KCJkYXRhc2V0cy9LTk4taGN2ZGF0MC5jc3YiKQ0KYGBgDQoNCiMjIyBQcm9wZXJ0aWVzIG9mIHRoZSBkYXRhDQoNClRoaXMgc2VjdGlvbiBjb3ZlcnMgdGhlIHByb3BlcnRpZXMgb2YgdGhlIGRhdGFzZXQsIHdpdGhvdXQgaGF2aW5nIG1hZGUgYW55IGNoYW5nZXMgdG8gaXQuDQoNCmBgYHtyfQ0Kc3RyKE5ld0RhdGEpDQpgYGANCg0KQXMgd2UgY2FuIHNlZSBhYm92ZSwgdGhlIGRhdGFmcmFtZSBjb25zaXN0cyBvZiB0d2VsdmUgY29sdW1ucyB0aGF0IGNvbnNpc3RzIG9mIGEgbnVtZXJpYyBkYXRhIGFuZCB0d28gY29sdW1ucyBoYXZlIGNoYXJhY3RlcmlzdGljIGRhdGEuIEluIHRvdGFsIHRoZSBkYXRhIHNldCBjb250YWlucyA2MTUgb2JzZXJ2YXRpb25zIChyb3dzKS4NCg0KVGhlIGRhdGEgc2V0IGlzIGRpc3Rpbmd1aXNoZWQgYnkgdGhlIHZhcmlhYmxlIGBDYXRlZ29yeWAuIFNvIHRoZSBoZWFsdGgtc3RhdGUgb2YgdGhlIHBhdGllbnRzIGlzIHZpZXdlZCBhcyBgQ2F0ZWdvcnlgLiBEb3duIGJlbG93IGlzIGdpdmVuIHRoYXQgdGhlIG1ham9yaXR5IG9mIHRoZSBkYXRhIHNldCBjb25zaXN0cyBvZiBCbG9vZCBEb25vcnMuDQoNCmBgYHtyfQ0KY2F0KCJDYXRlZ3JveSBieSBTZXggc3VtbWFyeSIsIlxuXG4iKQ0KTmV3RGF0YSAlPiUgDQogIHRhYnlsKENhdGVnb3J5LCBTZXgpDQpjYXQoIlxuXG4iLCJBZ2Ugc3VtbWFyeSIsIlxuXG4iKQ0Kc3VtbWFyeShOZXdEYXRhJEFnZSkNCiAgDQpgYGANCg0KIyMgRGF0YSBQcmVwYXJhdGlvbg0KDQpBdCBmaXJzdCwgd2UgY29weSB0aGUgb3JpZ2luYWwgZGF0YXNldCB0byBhIG5ldyBkYXRhIGZyYW1lIHNvIGlmIGEgZXJyb3IgaXMgbWFkZSwgdGhlIG9yaWdpbmFsIGRhdGEgd29uJ3QgYmUgbWVzc2VkIHVwLg0KDQpgYGB7cn0NCkNsZWFuZWRfZGF0YTwtTmV3RGF0YQ0KYGBgDQoNClRoZSBrTk4gbW9kZWwgaXMgYXQgaXRzIGJlc3Qgd2hlbiBhbCB2YWx1ZXMgYXJlIGluIHRoZSBzYW1lIHJhbmdlLiBTbyBhcyB3ZSBjYW4gc2VlIGRvd24gYmVsb3csIHRoZSBtaW5pbXVtIGFuZCBtYXhpbXVtIHZhbHVlcyBjYW4gZGlmZmVyIGEgbG90Og0KDQpgYGB7cn0NCnN1bW1hcnkoQ2xlYW5lZF9kYXRhKQ0KYGBgDQoNClNvIGZvciB0aGF0IHJlYXNvbiB0aGUgZGF0YSBoYXMgdG8gYmUgbm9ybWFsaXplZC4gVGhpcyBjYW4gYmUgYWNoaWV2ZWQgdmlhIHRoZSBub3JtYWxpemF0aW9uIGZ1bmN0aW9uLiBUaGUgbm9ybWFsaXphdGlvbiBmdW5jdGlvbiBzZXRzIHRoZSBoaWdoZXN0IHZhbHVlIGFzIGEgIjEiIGFuZCB0aGUgbG93ZXN0IHZhbHVlIGFzIGEgIjAiLiBJdCB0aGVuIHdpbGwgcHJvcG9ydGlvbmFsbHkgc2NhbGUgdGhlIG9yaWdpbmFsIHZhbHVlcyBiZXR3ZWVuIHRoZSAwIGFuZCAxLg0KDQpgYGB7cn0NCk5vcm1hbGl6ZSA8LSBmdW5jdGlvbih4KXtyZXR1cm4oKHgtbWluKHgpKS8obWF4KHgpLW1pbih4KSkpfQ0KYGBgDQoNCmBgYHtyfQ0KbnVtX29mX2NvbHVtbnMgPC0gZGltKENsZWFuZWRfZGF0YSlbMl0gI2dldCBudW1iZXIgb2YgY29sdW1ucywgMiBzdGFuZHMgZm9yIHNlY29uZCB2YWx1ZSB3aGljaCByZXByZXNlbnRzIHRoZSBjb2x1bW4gY291bnQuDQpDbGVhbmVkX2RhdGFfbiA8LSBzYXBwbHkoNTpudW1fb2ZfY29sdW1ucywgZnVuY3Rpb24oeCl7Tm9ybWFsaXplKENsZWFuZWRfZGF0YVsseF0pfSkgI3N0YXJ0IHRoZSBub3JtYWxpemF0aW9uIGZyb20gNXRoIGNvbHVtbg0KDQpgYGANCg0KRm9yIHRoaXMgbW9kZWwgYXJlIHRoZSBkYXRhIGlucHV0IG9mIGBCbG9vZCBEb25vcmAgYW5kIGBzdXNwZWN0IEJsb29kIERvbm9yYCBub3QgbWFuZGF0b3J5LCBzbyB0aGV5IHdpbGwgYmUgcmVtb3ZlZCBmcm9tIHRoZSBkYXRhc2V0Lg0KDQpgYGB7cn0NCnN1bW1hcnkoQ2xlYW5lZF9kYXRhX24pDQpgYGANCg0KIyMgTW9kZWxpbmcNCg0KdGV4dCBhbmQgY29kZSBoZXJlDQoNCiMjIEV2YWx1YXRpb24gYW5kIERlcGxveW1lbnQNCg0KdGV4dCBhbmQgY29kZSBoZXJlDQoNCnJldmlld2VyIGFkZHMgc3VnZ2VzdGlvbnMgZm9yIGltcHJvdmluZyB0aGUgbW9kZWwNCg0KIyMgQmlibGlvZ3JhcGh5DQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkFzc2lnbWVudCAtIGtOTiBESVkiDQphdXRob3I6DQotICJFbWllbCBNYXRlcnMgLSA2MzQ3MzUgLSBBdXRob3IiDQotICJuYW1lIHJldmlld2VyIGhlcmUgLSBSZXZpZXdlciINCmRhdGU6ICJgciBmb3JtYXQoU3lzLnRpbWUoKSwgJyVkICVCLCAlWScpYCINCm91dHB1dDoNCiAgaHRtbF9kb2N1bWVudDoNCiAgICB0b2M6IHllcw0KICAgIHRvY19kZXB0aDogJzInDQogICAgZGZfcHJpbnQ6IHBhZ2VkDQogIGh0bWxfbm90ZWJvb2s6DQogICAgdG9jOiB5ZXMNCiAgICB0b2NfZGVwdGg6IDINCmJpYmxpb2dyYXBoeTogcmVmZXJlbmNlcy5iaWINCi0tLQ0KDQotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0NCg0KQ2hvb3NlIGEgc3VpdGFibGUgZGF0YXNldCBmcm9tIFt0aGlzXShodHRwczovL2dpdGh1Yi5jb20vSEFOLU0zRE0tRGF0YS1NaW5pbmcvYXNzaWdubWVudHMvdHJlZS9tYXN0ZXIvZGF0YXNldHMpIGZvbGRlciBhbmQgdHJhaW4geW91ciBvd24ga05OIG1vZGVsLiBGb2xsb3cgYWxsIHRoZSBzdGVwcyBmcm9tIHRoZSBDUklTUC1ETSBtb2RlbC4NCg0KIyBTZXQtdXANCg0KQmVmb3JlIHdlIGNhbiBzdGFydCB3aXRoIHRoaXMgYXNzaWdubWVudCB0aGUgaW5zdGFsbGF0aW9uIGFuZCBhY3RpdmF0aW9uIG9mIHNvbWUgcGFja2FnZXMgaXMgbmVlZGVkOg0KDQpgYGB7cn0NCmxpYnJhcnkodGlkeXZlcnNlKQ0KbGlicmFyeShkcGx5cikNCmxpYnJhcnkoamFuaXRvcikNCmxpYnJhcnkoZ29vZ2xlc2hlZXRzNCkNCmxpYnJhcnkoY2xhc3MpDQpsaWJyYXJ5KGNhcmV0KQ0KYGBgDQoNCiMgQnVzaW5lc3MgVW5kZXJzdGFuZGluZw0KDQpUaGlzIGFzc2lnbm1lbnQgaXMgYmFzZWQgb24gdGhlIGRhdGEgYW5kIHN0b3J5IG9mIEdlb3JnIEhvZmZtYW5uLCBBbmRyZWFzIEJpZXRlbmJlY2ssIFJhbGYgTGljaHRpbmdoYWdlbiBhbmQgRnJhbmsgS2xhd29ubiBbQGhvZmZtYW5uMjAxOF0uDQoNCldoZW4gbGFib3JhdG9yeSBoYXZlIHRvIG1ha2UgYSBkaWFnbm9zZSwgdGhlaXIgd2F5IG9mIG1ha2luZyBkZWNpc2lvbnMgaXMgYmFzZWQgb24gcnVsZXM6ICJJZi4uLnRoZW4uLi5lbHNlIi4gVGhpcyB3YXkgb2YgZGlhZ25vc2luZyBjYW4gYmUgc2VlbiBhcyBhIGRlY2lzaW9uIHRyZWUuIFRob3NlIHRyZWVicmFuY2hlcyBjYW4gYmUgc2VlbiBhcyBlc3RhYmxpc2hlZCBtZWRpY2FsIGd1aWRlbGluZXMgdGhhdCBsZWFkIGF0IHNvbWUgcG9pbnQgdG8gYSBkaWFnbm9zaXMsIGxpa2Ugc2hvd24gaW4gdGhlIGV4YW1wbGUgZG93biBiZWxvdy4NCg0KIVtFeGFtcGxlIG9mIGFuIGVzdGFibGlzaGVkIGRpYWdub3N0aWMgcGF0aHdheSBmb3IgdGhlIGRpZmZlcmVudGlhbCBkaWFnbm9zaXMgb2YgYW5lbWlhXShpbWFnZXMvcGFzdGUtQzAxODU0NDUucG5nKXsjaGVtb2dsb2Jpbn0NCg0KIyMgRGF0YSBxdWVzdGlvbg0KDQpUaGlzIGRhdGEgcHJvYmxlbSBpcyBhYm91dCBjcmVhdGluZyBhIEtOTiBtb2RlbCB0aGF0IGNhbiBkZXRlcm1pbmUgaW4gd2hhdCBzdGFnZSBhIHBhdGllbnQgaXM6DQoNCi0gICBDMCA9IEJsb29kIERvbm9yDQotICAgQzEgPSBoZXBhdGl0aXMgd2l0aG91dCBmaWJyb3NpcyBvciB3aXRoIG9ubHkgbWlub3Igc2lnbnMgb2YgcG9ydGFsIGZpYnJvc2lzDQotICAgQzIgPSB0aGVyYXB5LXJlbGV2YW50IGZpYnJvc2lzDQotICAgQzMgPSBMVFgtcmVsZXZhbnQgZW5kIHN0YWdlIGxpdmVyIGNpcnJob3Npcw0KDQpUaGUgZGF0YSBmb3IgdGhpcyBzdHVkeSBpcyBiYXNlZCBvbiA3MyBwYXRpZW50cyAoNTMgbWFsZXMsIDIyIGZlbWFsZXMpLCBhZ2VkIDE5IHRvIDc1IHllYXJzIChtZWRpYW4gNTApLCB3aXRoIGEgcHJvdmVuIHNlcm9sb2dpY2FsIGFuZCBoaXN0b3BhdGhvbG9naWNhbCBkaWFnbm9zaXMgb2YgaGVwYXRpdGlzIEMuIFdobyBoYXZlIHN1ZmZlciBhIGNocm9uaWMgaGVwYXRpdGlzIEMgaW5mZWN0aW9uIHdpdGhvdXQgZmlicm9zaXMgdG8gZW5kIHN0YWdlIGxpdmVyIGNpcnJob3NpcyB3aXRoIGEgbmVlZCBmb3IgbGl2ZXIgdHJhbnNwbGFudGF0aW9uIChMVFgpLg0KDQpJbiB0aGlzIGFzc2lnbm1lbnQgd2lsbCBmaXJzdCBiZSB0ZXN0ZWQgd2hldGhlciB0aGUga05OIG1vZGVsIGNhbiBzZXBlcmF0ZSB0aGUgc3RhZ2VzOiBDMSwgQzIgYW5kIEMzLiBBZnRlciB0aGF0IGl0IHdpbGwgYmUgcmVzZWFyY2hlZCBob3cgdGhlIG1vZGVsIHBlcmZvcm1zIGlmIGRhdGEgZnJvbSBCbG9vZCBEb25vcnMgaXMgYWRkZWQuDQoNCiMgRGF0YSBVbmRlcnN0YW5kaW5nDQoNCkFzIHNhaWQsIHRoaXMgZGF0YSBjb21lcyBmcm9tIGFuIG9wZW4gc291cmNlIGRhdGEgc2V0IGZyb20gR2VvcmcgSG9mZm1hbm4sIEFuZHJlYXMgQmlldGVuYmVjaywgUmFsZiBMaWNodGluZ2hhZ2VuIGFuZCBGcmFuayBLbGF3b25uIFtAaG9mZm1hbm4yMDE4XS4gSW4gdGhlIG5leHQgY29kZSBpcyB0aGUgZGF0YSB3cml0dGVuIHRvIGEgdGFibGUgY2FsbGVkIE5ld0RhdGEuDQoNCmBgYHtyfQ0KTmV3RGF0YTwtcmVhZF9jc3YoImRhdGFzZXRzL0tOTi1oY3ZkYXQwLmNzdiIpDQpgYGANCg0KIyMgUHJvcGVydGllcyBvZiB0aGUgZGF0YQ0KDQpUaGlzIHNlY3Rpb24gY292ZXJzIHRoZSBwcm9wZXJ0aWVzIG9mIHRoZSBkYXRhc2V0LCB3aXRob3V0IGhhdmluZyBtYWRlIGFueSBjaGFuZ2VzIHRvIGl0Lg0KDQpgYGB7cn0NCnN0cihOZXdEYXRhKQ0KYGBgDQoNCkFzIHdlIGNhbiBzZWUgYWJvdmUsIHRoZSBkYXRhZnJhbWUgY29uc2lzdHMgb2YgdHdlbHZlIGNvbHVtbnMgdGhhdCBjb25zaXN0cyBvZiBhIG51bWVyaWMgZGF0YSBhbmQgdHdvIGNvbHVtbnMgaGF2ZSBjaGFyYWN0ZXJpc3RpYyBkYXRhLiBJbiB0b3RhbCB0aGUgZGF0YSBzZXQgY29udGFpbnMgNjE1IG9ic2VydmF0aW9ucyAocm93cykuDQoNCiMjIyBEYXRhIHN1bW1hcnkNCg0KVGhlIGRhdGEgc2V0IGlzIGRpc3Rpbmd1aXNoZWQgYnkgdGhlIHZhcmlhYmxlIGBDYXRlZ29yeWAuIFNvIHRoZSBoZWFsdGgtc3RhdGUgb2YgdGhlIHBhdGllbnRzIGlzIHZpZXdlZCBhcyBgQ2F0ZWdvcnlgLiBEb3duIGJlbG93IGlzIGdpdmVuIHRoYXQgdGhlIG1ham9yaXR5IG9mIHRoZSBkYXRhIHNldCBjb25zaXN0cyBvZiBCbG9vZCBEb25vcnMuIEl0IGFsc28gc2hvd3MgdGhhdCB0aGUgeW91bmdlc3QgcGVyc29uIGlzIDE5IHllYXJzIG9sZCBhbmQgdGhlIG9sZGVzdCBwZXJzb24gaXMgNzcgeWVhcnMuDQoNCmBgYHtyIGVjaG89RkFMU0UsIGZpZy53aWR0aD01MH0NCmNhdCgiQ2F0ZWdvcnkgYnkgU2V4IC0gc3VtbWFyeSIsIlxuXG4iKQ0KTmV3RGF0YSAlPiUgDQogIHRhYnlsKENhdGVnb3J5LCBTZXgpDQpjYXQoIkFnZSBzdW1tYXJ5IiwiXG5cbiIpDQpzdW1tYXJ5KE5ld0RhdGEkQWdlKQ0KICANCmBgYA0KDQojIERhdGEgUHJlcGFyYXRpb24NCg0KIyMgQ3JlYXRpbmcgYSBuZXcgZWRpdGFibGUgZGF0YSBzZXQNCg0KQXQgZmlyc3QsIHdlIGNvcHkgdGhlIG9yaWdpbmFsIGRhdGFzZXQgdG8gYSBuZXcgZGF0YSBmcmFtZSBzbyBpZiBhIGVycm9yIGlzIG1hZGUsIHRoZSBvcmlnaW5hbCBkYXRhIHdvbid0IGJlIG1lc3NlZCB1cC4NCg0KYGBge3J9DQpSYXdfZGF0YTwtTmV3RGF0YQ0KYGBgDQoNCiMjIFR3ZWFraW5nIHRoZSBkYXRhDQoNClRoZSBrTk4gbW9kZWwgaXMgYXQgaXRzIGJlc3Qgd2hlbiBhbCB2YWx1ZXMgYXJlIGluIHRoZSBzYW1lIHJhbmdlLiBTbyBhcyB3ZSBjYW4gc2VlIGRvd24gYmVsb3csIHRoZSBtaW5pbXVtIGFuZCBtYXhpbXVtIHZhbHVlcyBjYW4gZGlmZmVyIGEgbG90IGFuZCB0aGVyZSBhcmUgYWxzbyBzb21lIG1pc3NpbmcgdmFsdWVzLiBUaGlzIGNhbiBiZSBzb2x2ZWQgYnkgbm9ybWFsaXppbmcgYW5kIGRlbGV0aW5nIHRoZSBvYnNlcnZhdGlvbnMuDQoNCmBgYHtyfQ0Kc3VtbWFyeShSYXdfZGF0YSkNCmBgYA0KDQojIyMgRGVsZXRpbmcgbWlzc2luZyB2YWx1ZXMNCg0KYGBge3J9DQpDbGVhbmVkX2RhdGE8LW5hLm9taXQoUmF3X2RhdGEpDQpzdW1tYXJ5KENsZWFuZWRfZGF0YSkNCmBgYA0KDQojIyMgTm9ybWFsaXppbmcgdGhlIGRhdGENCg0KU28gbm93IHRoZSBkYXRhIGhhcyB0byBiZSBub3JtYWxpemVkLCBvbmx5IHRoaXMgd2F0IHRoZSBrTk4gbW9kZWwgY2FuIHdvcmsgcHJvcGVybHkuIE90aGVyd2lzZSBzb21lIHZhcmlhYmxlcyBjb3VsZCB0YWtlIG92ZXJoYW5kIGJ5IGhhdmluZyByZWxhdGl2ZWx5IGhpZ2ggdmFsdWVzLiBUaGlzIGNhbiBiZSBhY2hpZXZlZCB2aWEgdGhlIG5vcm1hbGl6YXRpb24gZnVuY3Rpb24uIFRoZSBub3JtYWxpemF0aW9uIGZ1bmN0aW9uIHNldHMgdGhlIGhpZ2hlc3QgdmFsdWUgYXMgYSAiMSIgYW5kIHRoZSBsb3dlc3QgdmFsdWUgYXMgYSAiMCIuIEl0IHRoZW4gd2lsbCBwcm9wb3J0aW9uYWxseSBzY2FsZSB0aGUgb3JpZ2luYWwgdmFsdWVzIGJldHdlZW4gdGhlIDAgYW5kIDEuDQoNCiMjIyMgU2V0dGluZyB1cCB0aGUgbm9ybWFsaXplIGZ1Y3Rpb24NCg0KYGBge3J9DQpOb3JtYWxpemUgPC0gZnVuY3Rpb24oeCl7cmV0dXJuKCh4LW1pbih4KSkvKG1heCh4KS1taW4oeCkpKX0NCmBgYA0KDQojIyMjIFdyaXRlIHRoZSBub3JtYWxpemVkIHZhbHVlcyB0byBhIG5ldyB0YWJsZQ0KDQpgYGB7cn0NCm51bV9vZl9jb2x1bW5zIDwtIGRpbShDbGVhbmVkX2RhdGEpWzJdICNnZXQgbnVtYmVyIG9mIGNvbHVtbnMsIDIgc3RhbmRzIGZvciBzZWNvbmQgdmFsdWUgd2hpY2ggcmVwcmVzZW50cyB0aGUgY29sdW1uIGNvdW50Lg0KQ2xlYW5lZF9kYXRhX24gPC0gc2FwcGx5KDU6bnVtX29mX2NvbHVtbnMsIGZ1bmN0aW9uKHgpe05vcm1hbGl6ZShDbGVhbmVkX2RhdGFbLHhdKX0pICNzdGFydCB0aGUgbm9ybWFsaXphdGlvbiBmcm9tIDV0aCBjb2x1bW4NCg0KYGBgDQoNCkluIHRoaXMgc3VtbWFyeSBpcyBjbGVhcmx5IHZpc2libGUgdGhhdCB0aGVyZSBhcmUgbm8gbWlzc2luZyB2YWx1ZXMgKE5BJ3MpIGFuZCBhbGwgdGhlIHZhbHVlcyBhcmUgYmV0d2VlbiAiMCIgYW5kICIxIi4NCg0KYGBge3J9DQpzdW1tYXJ5KGFzX3RpYmJsZShDbGVhbmVkX2RhdGFfbikpDQpgYGANCg0KIyMjIEV4Y2x1ZGUgY29sdW1ucw0KDQpGb3IgdGhpcyBtb2RlbCBhcmUgdGhlIGRhdGEgaW5wdXQgb2YgYEJsb29kIERvbm9yYCBhbmQgYHN1c3BlY3QgQmxvb2QgRG9ub3JgIG5vdCBtYW5kYXRvcnksIHNvIHRoZXkgd2lsbCBiZSByZW1vdmVkIGZyb20gdGhlIGRhdGFzZXQuDQoNCiMgTW9kZWxpbmcNCg0KdGV4dCBhbmQgY29kZSBoZXJlDQoNCiMgRXZhbHVhdGlvbiBhbmQgRGVwbG95bWVudA0KDQp0ZXh0IGFuZCBjb2RlIGhlcmUNCg0KcmV2aWV3ZXIgYWRkcyBzdWdnZXN0aW9ucyBmb3IgaW1wcm92aW5nIHRoZSBtb2RlbA0KDQojIEJpYmxpb2dyYXBoeQ0K</div>
 
 
 
