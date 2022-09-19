@@ -94,16 +94,22 @@ The kNN model is at its best when al values are in the same range. So as we can 
 summary(Cleaned_data)
 ```
 
-So for that reason the data has to be normalized. This can be achived via the normalization function.
+So for that reason the data has to be normalized. This can be achieved via the normalization function. The normalization function sets the highest value as a "1" and the lowest value as a "0". It then will proportionally scale the original values between the 0 and 1.
 
 ```{r}
-Norm_data
+Normalize <- function(x){return((x-min(x))/(max(x)-min(x)))}
+```
+
+```{r}
+num_of_columns <- dim(Cleaned_data)[2] #get number of columns, 2 stands for second value which represents the column count.
+Cleaned_data_n <- sapply(5:num_of_columns, function(x){Normalize(Cleaned_data[,x])}) #start the normalization from 5th column
+
 ```
 
 For this model are the data input of `Blood Donor` and `suspect Blood Donor` not mandatory, so they will be removed from the dataset.
 
 ```{r}
-
+summary(Cleaned_data_n)
 ```
 
 ## Modeling
