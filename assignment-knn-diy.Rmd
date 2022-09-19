@@ -88,6 +88,18 @@ At first, we copy the original dataset to a new data frame so if a error is made
 Cleaned_data<-NewData
 ```
 
+The kNN model is at its best when al values are in the same range. So as we can see down below, the minimum and maximum values can differ a lot:
+
+```{r}
+summary(Cleaned_data)
+```
+
+So for that reason the data has to be normalized. This can be achived via the normalization function.
+
+```{r}
+Norm_data
+```
+
 For this model are the data input of `Blood Donor` and `suspect Blood Donor` not mandatory, so they will be removed from the dataset.
 
 ```{r}
