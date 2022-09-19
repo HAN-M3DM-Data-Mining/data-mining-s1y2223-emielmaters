@@ -15,13 +15,6 @@ output:
 bibliography: references.bib
 ---
 
-```{r}
-library(tidyverse)
-library(googlesheets4)
-library(class)
-library(caret)
-```
-
 ------------------------------------------------------------------------
 
 Choose a suitable dataset from [this](https://github.com/HAN-M3DM-Data-Mining/assignments/tree/master/datasets) folder and train your own kNN model. Follow all the steps from the CRISP-DM model.
@@ -34,6 +27,9 @@ Before we can start with this assignment the installation and activation of some
 library(tidyverse)
 library(dplyr)
 library(janitor)
+library(googlesheets4)
+library(class)
+library(caret)
 ```
 
 ## Business Understanding
@@ -46,12 +42,14 @@ When laboratory have to make a diagnose, their way of making decisions is based 
 
 This data problem is about creating a KNN model that can determine in what stage a patient is:
 
--   C0 = healthy person
+-   C0 = Blood Donor
 -   C1 = hepatitis without fibrosis or with only minor signs of portal fibrosis
 -   C2 = therapy-relevant fibrosis
 -   C3 = LTX-relevant end stage liver cirrhosis
 
 The data for this study is based on 73 patients (53 males, 22 females), aged 19 to 75 years (median 50), with a proven serological and histopathological diagnosis of hepatitis C. Who have suffer a chronic hepatitis C infection without fibrosis to end stage liver cirrhosis with a need for liver transplantation (LTX).
+
+In this assignment will first be tested whether the kNN model can seperate the stages: C1, C2 and C3. After that it will be researched how the model performs if data from Blood Donors is added.
 
 ## Data Understanding
 
@@ -69,13 +67,17 @@ This section covers the properties of the dataset, without having made any chang
 str(NewData)
 ```
 
-As we can see above, the dataframe consists of 12 columns that consist of a numeric kind of data and two columns have characteristic data. In total the data set contains 615 observations.
+As we can see above, the dataframe consists of twelve columns that consists of a numeric data and two columns have characteristic data. In total the data set contains 615 observations (rows).
 
-The data set is distinguished by Category. So the health-state of the patients is viewed as Category. Down below is given that the majority of the data set consists of Blood Donors.
+The data set is distinguished by the variable `Category`. So the health-state of the patients is viewed as `Category`. Down below is given that the majority of the data set consists of Blood Donors.
 
 ```{r}
+cat("Categroy by Sex summary","\n\n")
 NewData %>% 
   tabyl(Category, Sex)
+cat("\n\n","Age summary","\n\n")
+summary(NewData$Age)
+  
 ```
 
 ## Data Preparation
@@ -84,6 +86,12 @@ At first, we copy the original dataset to a new data frame so if a error is made
 
 ```{r}
 Cleaned_data<-NewData
+```
+
+For this model are the data input of `Blood Donor` and `suspect Blood Donor` not mandatory, so they will be removed from the dataset.
+
+```{r}
+
 ```
 
 ## Modeling
