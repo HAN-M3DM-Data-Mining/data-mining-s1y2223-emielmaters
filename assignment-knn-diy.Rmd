@@ -55,30 +55,36 @@ The data for this study is based on 73 patients (53 males, 22 females), aged 19 
 
 ## Data Understanding
 
-As said, this data comes from an open source data set from Georg Hoffmann, Andreas Bietenbeck, Ralf Lichtinghagen and Frank Klawonn [@hoffmann2018].
-
-At first, we copy the original dataset to a new dataframe so if a error is made, the original data won't be messed up.
+As said, this data comes from an open source data set from Georg Hoffmann, Andreas Bietenbeck, Ralf Lichtinghagen and Frank Klawonn [@hoffmann2018]. In the next code is the data written to a table called NewData.
 
 ```{r}
-rawDf<-KNN_hcvdat0
+NewData<-read_csv("datasets/KNN-hcvdat0.csv")
 ```
 
-### Prperties of the data
+### Properties of the data
+
+This section covers the properties of the dataset, without having made any changes to it.
 
 ```{r}
-str(rawDf)
+str(NewData)
 ```
 
-As we can see does the dataframe consist of 12 columns that consist of a numeric kind of data and two columns have characteristic data. In total the data set contains 615 observations.
+As we can see above, the dataframe consists of 12 columns that consist of a numeric kind of data and two columns have characteristic data. In total the data set contains 615 observations.
+
+The data set is distinguished by Category. So the health-state of the patients is viewed as Category. Down below is given that the majority of the data set consists of Blood Donors.
 
 ```{r}
-rawDf %>% 
+NewData %>% 
   tabyl(Category, Sex)
 ```
 
 ## Data Preparation
 
-text and code here
+At first, we copy the original dataset to a new data frame so if a error is made, the original data won't be messed up.
+
+```{r}
+Cleaned_data<-NewData
+```
 
 ## Modeling
 
