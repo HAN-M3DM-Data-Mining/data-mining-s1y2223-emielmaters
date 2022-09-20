@@ -105,8 +105,20 @@ summary(Raw_data)
 ### Deleting missing values
 
 ```{r}
-Cleaned_data<-na.omit(Raw_data)
-summary(Cleaned_data)
+Cleaned_data_na<-na.omit(Raw_data)
+summary(Cleaned_data_na)
+```
+
+### Exclude columns
+
+For the first model is the data input of `Blood Donor` and `suspect Blood Donor` not needed, so they can be removed from the dataset. Also the index column "...1" is not needed. This dataset will be called `Cleaned_data_na_cr`.
+
+```{r}
+Cleaned_data_na_c<-select(Cleaned_data_na, -...1)
+Cleaned_data_na_c_r<-filter(Cleaned_data_na_c, Category!="0=Blood Donor"&Category!="0s=suspect Blood Donor")
+
+Cleaned_data_na_c_r %>%
+  head()
 ```
 
 ### Normalizing the data
@@ -122,20 +134,18 @@ Normalize <- function(x){return((x-min(x))/(max(x)-min(x)))}
 #### Write the normalized values to a new table
 
 ```{r}
-num_of_columns <- dim(Cleaned_data)[2] #get number of columns, 2 stands for second value which represents the column count.
-Cleaned_data_n <- sapply(5:num_of_columns, function(x){Normalize(Cleaned_data[,x])}) #start the normalization from 5th column
+num_of_columns <- dim(Cleaned_data_na_c_r)[2] #get number of columns, 2 stands for second value which represents the column count.
+Cleaned_data_na_c_r_n <- sapply(4:num_of_columns, function(x){Normalize(Cleaned_data_na_c_r[,x])}) #start the normalization from 5th column
 
 ```
 
 In this summary is clearly visible that there are no missing values (NA's) and all the values are between "0" and "1".
 
 ```{r}
-summary(as_tibble(Cleaned_data_n))
+summary(as_tibble(Cleaned_data_na_c_r_n))
 ```
 
-### Exclude columns
-
-For this model are the data input of `Blood Donor` and `suspect Blood Donor` not mandatory, so they will be removed from the dataset.
+In conclusion, the dataset `Cleaned_data_na_c_r_n`, has no missing values, not needed columns and rows were deleted and all numbers are normalized.
 
 # Modeling
 
