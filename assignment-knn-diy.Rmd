@@ -44,14 +44,13 @@ When laboratory have to make a diagnose, their way of making decisions is based 
 
 This data problem is about creating a KNN model that can determine in what stage a patient is:
 
--   C0 = Blood Donor
 -   C1 = hepatitis without fibrosis or with only minor signs of portal fibrosis
 -   C2 = therapy-relevant fibrosis
 -   C3 = LTX-relevant end stage liver cirrhosis
 
 The data for this study is based on 73 patients (53 males, 22 females), aged 19 to 75 years (median 50), with a proven serological and histopathological diagnosis of hepatitis C. Who have suffer a chronic hepatitis C infection without fibrosis to end stage liver cirrhosis with a need for liver transplantation (LTX).
 
-In this assignment will first be tested whether the kNN model can seperate the stages: C1, C2 and C3. After that it will be researched how the model performs if data from Blood Donors is added.
+In this assignment will be tested whether the kNN model can seperate the stages: C1, C2 and C3.
 
 # Data Understanding
 
@@ -111,7 +110,7 @@ summary(Cleaned_data_na)
 
 ### Exclude columns
 
-For the first model is the data input of `Blood Donor` and `suspect Blood Donor` not needed, so they can be removed from the dataset. Also the index column "...1" is not needed. This dataset will be called `Cleaned_data_na_cr`.
+For the model is the data input of `Blood Donor` and `suspect Blood Donor` not needed, so they can be removed from the dataset. Also the index column "...1" is not needed. This dataset will be called `Cleaned_data_na_cr`.
 
 ```{r}
 Cleaned_data_na_c<-select(Cleaned_data_na, -...1)
@@ -155,6 +154,8 @@ summary(Cleaned_data_na_c_r_n)
 
 In conclusion, the dataset `Cleaned_data_na_c_r_n`, has no missing values, not needed columns and rows were deleted and all numbers are normalized.
 
+### Create train and test data
+
 As last step, the training and test data sets must be created for the model.
 
 ```{r}
@@ -176,16 +177,37 @@ Modeling_C3<-filter(Modeling_dataset, Category=="Cirrhosis")
 Modeling_trainset_C3<-slice(Modeling_C3,1:round(dim(Modeling_C1)[1]*a))
 Modeling_testset_C3<-slice(Modeling_C3,round(dim(Modeling_C1)[1]*a)+1:dim(Modeling_C3)[1])
 
+#the final training sets
+Modeling_trainset_feat<-rbind(select(Modeling_trainset_C1,-Category),select(Modeling_trainset_C2,-Category),select(Modeling_trainset_C3,-Category))
+
+Modeling_trainset_label<-rbind(select(Modeling_trainset_C1,Category),select(Modeling_trainset_C2,Category),select(Modeling_trainset_C3,Category))
+
+#the final testing sets
+Modeling_testset_feat<-rbind(select(Modeling_testset_C1,-Category),select(Modeling_testset_C2,-Category),select(Modeling_testset_C3,-Category))
+
+Modeling_testset_label<-rbind(select(Modeling_testset_C1,Category),select(Modeling_testset_C2,Category),select(Modeling_testset_C3,Category))
 ```
 
 # Modeling
 
-text and code here
+The piece of code down below shows how the kNN model is fed with the data. With the "k" can the numbers of neighbours be set. So the model will compare the "k" neighbours to make its decision.
+
+```{r}
+Model_test_pred <- knn(train = as.matrix(Modeling_trainset_feat), test = as.matrix(Modeling_testset_feat), cl = as.matrix(Modeling_trainset_label), k = 21)
+
+head(Model_test_pred)
+```
 
 # Evaluation and Deployment
 
-text and code here
+Now it is time to see how the model worked out. As we can see, the model is not flawless. It has a accuracy of 71%, with a 95% certainty interval between 44% and 89%. These values are especially for the medical world not acceptable. So in this case the model should be enhanced to perform better. This can be achieved by providing the model with more samples. This way, the model will be better to train and test itself and produce better results.
 
-reviewer adds suggestions for improving the model
+The confusion matrix also shows that the kNN model finds it difficult to interpret the Fibrosis right. None of its guesses was correct.
+
+```{r}
+confusionMatrix(Model_test_pred, Modeling_testset_label[[1]], positive = NULL, dnn = c("Prediction", "True"))
+```
+
+## Suggestion by the reviewer
 
 # Bibliography
