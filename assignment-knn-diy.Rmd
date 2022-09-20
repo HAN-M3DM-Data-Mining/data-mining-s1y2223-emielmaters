@@ -142,17 +142,41 @@ Normalize <- function(x){return((x-min(x))/(max(x)-min(x)))}
 
 ```{r}
 num_of_columns <- dim(Cleaned_data_na_c_r)[2] #get number of columns, 2 stands for second value which represents the column count.
-Cleaned_data_na_c_r_n <- sapply(4:num_of_columns, function(x){Normalize(Cleaned_data_na_c_r[,x])}) #start the normalization from 5th column
+Cleaned_data_na_c_r_n <- sapply(4:num_of_columns, function(x){Normalize(Cleaned_data_na_c_r[,x])})%>% #start the normalization from 4th column
+  as.data.frame() 
 
 ```
 
 In this summary is clearly visible that there are no missing values (NA's) and all the values are between "0" and "1".
 
 ```{r}
-summary(as_tibble(Cleaned_data_na_c_r_n))
+summary(Cleaned_data_na_c_r_n)
 ```
 
 In conclusion, the dataset `Cleaned_data_na_c_r_n`, has no missing values, not needed columns and rows were deleted and all numbers are normalized.
+
+As last step, the training and test data sets must be created for the model.
+
+```{r}
+Modeling_dataset<-cbind(select(Cleaned_data_na_c_r, Category),Cleaned_data_na_c_r_n) #merge the two datasets together
+#now devide the dataset into a train and test dataset
+a<-0.75 #percentage to use for training
+#Hepatitis
+Modeling_C1<-filter(Modeling_dataset, Category=="Hepatitis")
+Modeling_trainset_C1<-slice(Modeling_C1,1:round(dim(Modeling_C1)[1]*a))
+Modeling_testset_C1<-slice(Modeling_C1,round(dim(Modeling_C1)[1]*a)+1:dim(Modeling_C1)[1])
+
+#Fibrosis
+Modeling_C2<-filter(Modeling_dataset, Category=="Fibrosis")
+Modeling_trainset_C2<-slice(Modeling_C2,1:round(dim(Modeling_C2)[1]*a))
+Modeling_testset_C2<-slice(Modeling_C2,round(dim(Modeling_C2)[1]*a)+1:dim(Modeling_C2)[1])
+
+#Cirrhosis
+Modeling_C3<-filter(Modeling_dataset, Category=="Cirrhosis")
+Modeling_trainset_C3<-slice(Modeling_C3,1:round(dim(Modeling_C1)[1]*a))
+Modeling_testset_C3<-slice(Modeling_C3,round(dim(Modeling_C1)[1]*a)+1:dim(Modeling_C3)[1])
+
+```
 
 # Modeling
 
