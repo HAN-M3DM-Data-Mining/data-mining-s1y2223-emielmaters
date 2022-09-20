@@ -121,6 +121,13 @@ Cleaned_data_na_c_r %>%
   head()
 ```
 
+Also we have to change the type `character` to `factor`, otherwise the kNN model won't be able to interpret the data correctly.
+
+```{r}
+Cleaned_data_na_c_r$Category<-factor(Cleaned_data_na_c_r$Category, levels = c("1=Hepatitis", "2=Fibrosis", "3=Cirrhosis"), labels = c("Hepatitis", "Fibrosis", "Cirrhosis"))
+Cleaned_data_na_c_r
+```
+
 ### Normalizing the data
 
 So now the data has to be normalized, only this wat the kNN model can work properly. Otherwise some variables could take overhand by having relatively high values. This can be achieved via the normalization function. The normalization function sets the highest value as a "1" and the lowest value as a "0". It then will proportionally scale the original values between the 0 and 1.
