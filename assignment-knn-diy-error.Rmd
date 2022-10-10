@@ -2,7 +2,7 @@
 title: "Assigment - kNN DIY - error"
 author:
 - "Emiel Maters - 634735 - Author"
-- "name reviewer here - Reviewer"
+- "Scott Erkan - Reviewer"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
   html_document:
