@@ -1,12 +1,16 @@
 ---
 title: "Assigment - Naive Bayes DIY - Authored"
 author:
-  - Scott Erkan - 617570 - Author
-  - Emiel Maters 634735 - Reviewer
+- "Scott Erkan - 617570 - Author"
+- "Emiel Maters 634735 - Reviewer"
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output:
-   html_notebook:
-    toc: true
+  html_document:
+    toc: yes
+    toc_depth: '2'
+    df_print: paged
+  html_notebook:
+    toc: yes
     toc_depth: 2
 ---
 
@@ -35,6 +39,14 @@ head(rawDF)
 Now that we have our data frame we have to make sure the labels are seen as two clear categories: "fake" and "confirmed" (meaning factual).
 
 **Review: changed type to label**
+
+previous code: `rawDF$`**type**`<- rawDF$`**type**`%>% factor %>% relevel("1")`
+
+`class(rawDF$`**type**`)`
+
+`rawDF$`**type**`<- rawDF$`**type**`%>% factor %>% relevel("0")`
+
+`class(rawDF$`**type**`)`
 
 ```{r}
 
@@ -75,6 +87,8 @@ Time to check how the clean data looks compared to the raw data after our change
 
 **Review: tribble = tibble**
 
+previous code: **tribble**`(Raw = rawCorpus$content[1:3], Clean = cleanCorpus$content[1:3])`
+
 ```{r}
 tibble(Raw = rawCorpus$content[1:3], Clean = cleanCorpus$content[1:3])
 ```
@@ -88,7 +102,13 @@ inspect(cleanDTM)
 
 Before we start modeling we need to split our data into test- and training sets.
 
-**Review: lst=TRUE --> list=FALSE**
+**Review: list=TRUE --\> list=FALSE**
+
+previous code: `trainIndex <- createDataPartition(rawDF$label, p = .75,`
+
+**list = TRUE**`,`
+
+`times = 1)`
 
 ```{r}
 set.seed(1234)
@@ -112,8 +132,13 @@ testDTM <- cleanDTM[-trainIndex, ]
 
 Now we reduce features to save on computation time.
 
-**Review: increased number to prevent my laptop from crashing**
-**Review: MatrixDocumentTerm --> DocumentTermMatrix**
+**Review: increased number to prevent my laptop from crashing --\> 1 to 1000**
+
+**Review: MatrixDocumentTerm --\> DocumentTermMatrix**
+
+previous code: `trainDTM <-`**MatrixDocumentTerm**`(trainCorpus, list(dictionary = freqWords))`
+
+`testDTM <-`**MatrixDocumentTerm**`(testCorpus, list(dictionary = freqWords))`
 
 ```{r}
 freqWords <- trainDTM %>% findFreqTerms(1000)
@@ -122,9 +147,6 @@ testDTM <-  DocumentTermMatrix(testCorpus, list(dictionary = freqWords))
 ```
 
 "We will transform the counts into a factor that simply indicates whether the word appears in the document or not. We'll first build our own function for this and then apply it to each column in the DTM."
-
-
-**Review: MatrixDocumentTerm --> DocumentTermMatrix**
 
 ```{r}
 convert_counts <- function(x) {
@@ -143,7 +165,12 @@ head(trainDTM[,1:10])
 It's modeling time!
 
 **Review: changed predict line to predict(nbayesModel, testDTM)**
-**Review: FAKE --> 1**
+
+previous code: predVec \<- `predict(`**naiveBayes**`, testDTM)`
+
+**Review: FAKE --\> 1**
+
+previous code: `confusionMatrix(predVec, testDF$label, positive =`**"fake"**`, dnn = c("Prediction", "True"))`
 
 ```{r}
 nbayesModel <- naiveBayes(trainDTM, trainDF$label, laplace = 1)
